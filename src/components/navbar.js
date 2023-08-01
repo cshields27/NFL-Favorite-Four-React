@@ -1,17 +1,22 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import './navbar.css';
 
 const Navbar = () => {
   return (
     <nav className="navbar-container">
-      <div className="navbar-logo">NFL Favorite Four</div>
+      <Link to="/" className="navbar-logo">
+          NFL Favorite Four
+      </Link>
       <div className="navbar-buttons">
         <button className="navbar-button">Leaderboard</button>
         <button className="navbar-button disabled">Leagues (Coming Soon)</button>
-        <button className="navbar-button">About</button>
+        <Link to="/about" className="navbar-button">
+          About
+        </Link>
         <div className="navbar-icon">
           <a
-            href="https://twitter.com"
+            href="https://twitter.com/connorshieldss"
             target="_blank"
             rel="noreferrer noopener"
             className="footer-twitter social button"

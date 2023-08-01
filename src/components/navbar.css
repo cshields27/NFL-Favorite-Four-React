@@ -6,7 +6,7 @@
   background-color: #27272D;
   color: white;
   max-width: 1400px; /* Set a maximum width for the navbar */
-  width: 80%; /* Ensure the navbar stretches to fill the available width */
+  width: 80%;
 }
 
 .navbar-logo {
@@ -64,7 +64,7 @@
 @media (max-width: 767px) {
   .navbar-container {
     flex-direction: column;
-    padding: 1rem 0.5rem; /* Adjust padding for smaller screens */
+    padding: 1rem 1rem; /* Adjust padding for smaller screens */
   }
 
   .navbar-buttons {

@@ -1,0 +1,38 @@
+.about-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.about-card {
+  background-color: #f2f2f2;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.about-card h2 {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.about-card p {
+  font-size: 16px;
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 767px) {
+  .about-card {
+    padding: 0.75rem;
+  }
+
+  .about-card h2 {
+    font-size: 20px;
+  }
+
+  .about-card p {
+    font-size: 14px;
+  }
+}

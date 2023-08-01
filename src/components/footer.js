@@ -1,14 +1,16 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import './footer.css';
 
 const Footer = () => {
   return (
     <footer className="footer-footer">
       <div className="footer-main">
-        <h2 className="footer-logo">NFL Favorite Four</h2>
+      <Link to="/" className="footer-logo">
+          NFL Favorite Four
+      </Link>
         <a
-          href="https://twitter.com"
+          href="https://twitter.com/connorshieldss"
           target="_blank"
           rel="noreferrer noopener"
           className="footer-twitter social button"
@@ -19,7 +21,9 @@ const Footer = () => {
             className="footer-image"
           />
         </a>
-        <button className="footer-link button-clean button">About</button>
+        <Link to="/" className="footer-link button-clean button">
+          About
+        </Link>
       </div>
       <span className="footer-copyright">
         © 2023 Favorite Four. All Rights Reserved.

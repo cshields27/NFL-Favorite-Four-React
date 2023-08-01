@@ -13,7 +13,7 @@ const Hero = () => {
       </div>
       <div className="hero-buttons">
         <button className="button">Submit Your Picks</button>
-        <button className="hero-learn button-clean button">Learn more</button>
+        {/*<button className="hero-learn button-clean button">Learn more</button>*/}
       </div>
     </section>
   );
