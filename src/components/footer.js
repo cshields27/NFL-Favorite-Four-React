@@ -48,18 +48,6 @@ const Footer = (props) => {
               className="footer-image1"
             />
           </a>
-          <a
-            href={props.link_Discord}
-            target="_blank"
-            rel="noreferrer noopener"
-            className="footer-discord social button"
-          >
-            <img
-              alt={props.image_alt1}
-              src={props.image_src1}
-              className="footer-image2"
-            />
-          </a>
         </div>
       </div>
       <div className="footer-container1">
@@ -82,11 +70,9 @@ const Footer = (props) => {
 
 Footer.defaultProps = {
   link_Twitter: 'https://twitter.com',
-  image_src1: '/Icons/discord.svg',
   Link: 'About',
   image_src: '/Icons/twitter.svg',
   Logo: 'NFL Favorite Four',
-  link_Discord: 'https://discord.com',
   image_alt1: 'image',
   image_alt2: 'image',
   image_alt: 'image',
