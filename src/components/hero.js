@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import './hero.css';
 
 const Hero = () => {
@@ -12,7 +12,9 @@ const Hero = () => {
         </p>
       </div>
       <div className="hero-buttons">
-        <button className="button">Submit Your Picks</button>
+        <Link to="/submit-picks" className="button">
+            Submit Your Picks
+        </Link>
         {/*<button className="hero-learn button-clean button">Learn more</button>*/}
       </div>
     </section>

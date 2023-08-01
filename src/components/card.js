@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import './card.css';
 
 const Card = () => {
@@ -17,7 +18,9 @@ const Card = () => {
           Don't let your sharp picks get diluted in a pool where you're forced to pick every spread, losing your edge to a random coworker who lucked out on the Titans - Jags result. By only taking 4 picks a week, you have the flexibility to show everyone that You Know Ball.
         </p>
         <button className="card-learn button">
-          <span className="card-text">Make Your Picks</span>
+          <Link to="/submit-picks" className="card-text">
+              Make Your Picks
+          </Link>
           <img
             alt="arrow"
             src="/Icons/arrow-2.svg"
