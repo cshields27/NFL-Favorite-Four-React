@@ -1,0 +1,49 @@
+/* submitpicks.css */
+
+/* Container for the SubmitPicks page */
+.submit-picks-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  gap: 1rem;
+  background-color: #27272D;
+  color: white;
+  min-height: 100vh;
+}
+
+/* Main content area */
+.submit-picks-content {
+  max-width: 600px;
+  text-align: center;
+}
+
+/* Heading style */
+.submit-picks-heading {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+/* Paragraph style */
+.submit-picks-paragraph {
+  font-size: 1.2rem;
+}
+
+/* Login button style */
+.submit-picks-button {
+  padding: 0.5rem 1rem;
+  background-color: rgb(255, 207, 119);
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--dl-color-gray-black);
+  cursor: pointer;
+  box-shadow: 5px 6px 0px 0px #000000;
+  transition: 0.3s;
+}
+
+.submit-picks-button:hover {
+  opacity: 0.8;
+}

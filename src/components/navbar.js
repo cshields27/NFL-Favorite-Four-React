@@ -1,8 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import useFirebaseAuth from '../hooks/useFirebaseAuth';
 import './navbar.css';
 
 const Navbar = () => {
+  const { user, handleLogin, handleLogout } = useFirebaseAuth();
+
   return (
     <nav className="navbar-container">
       <Link to="/" className="navbar-logo">
@@ -28,7 +31,15 @@ const Navbar = () => {
             />
           </a>
         </div>
-        <button className="navbar-button login">Login</button>
+        {user ? (
+          <button className='navbar-button login' onClick={handleLogout}>
+            Logout {user.displayName} {user.uid}
+          </button>
+        ) : (
+          <button className='navbar-button login' onClick={handleLogin}>
+            Login
+          </button>
+        )}
       </div>
     </nav>
   );
