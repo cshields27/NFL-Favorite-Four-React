@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet'
 
 import Navbar from '../components/navbar'
 import Hero from '../components/hero'
-import Cards from '../components/cards'
+import Card from '../components/card'
 import Footer from '../components/footer'
 import './home.css'
 
@@ -17,7 +17,7 @@ const Home = (props) => {
       </Helmet>
       <Navbar></Navbar>
       <Hero></Hero>
-      <Cards></Cards>
+      <Card></Card>
       <Footer></Footer>
     </div>
   )
