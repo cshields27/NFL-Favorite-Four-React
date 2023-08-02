@@ -4,7 +4,12 @@ import './submitPicksForm.css';
 
 const SubmitPicksForm = () => {
   const [matchups, setMatchups] = useState([]);
-  const [selectedOptions, setSelectedOptions] = useState({});
+  const [selectedOptions, setSelectedOptions] = useState({
+    favorite: null,
+    underdog: null,
+    over: null,
+    under: null,
+  });
 
   useEffect(() => {
     // Fetch matchups data from the backend API
@@ -21,13 +26,11 @@ const SubmitPicksForm = () => {
     fetchMatchups();
   }, []);
 
-  const handleSelectOption = (optionType, selectedOption, matchupId) => {
+  console.log(matchups)
+  const handleSelectOption = (optionType, matchupId) => {
     setSelectedOptions((prevSelectedOptions) => ({
       ...prevSelectedOptions,
-      [matchupId]: {
-        ...prevSelectedOptions[matchupId],
-        [optionType]: selectedOption,
-      },
+      [optionType]: matchupId
     }));
   };
 
@@ -37,20 +40,21 @@ const SubmitPicksForm = () => {
         {matchups.map((matchup) => (
           <MatchupRow
             key={matchup.id}
+            matchupId={matchup.id}
             homeTeam={matchup.home_team}
             awayTeam={matchup.away_team}
             spread={matchup.spread}
             overUnder={matchup.over_under}
-            onSelect={(optionType, selectedOption) =>
-              handleSelectOption(optionType, selectedOption, matchup.id)
+            onSelect={(optionType) =>
+              handleSelectOption(optionType, matchup.id)
             }
-            selectedOptions={selectedOptions[matchup.id] || {}}
+            selectedOptions={selectedOptions || {}}
           />
         ))}
       </div>
-      {/* Add any other form elements and buttons here */}
+      <button className='submit-button' disabled={false} onClick={() => console.log(selec)}>Submit Picks</button>
     </div>
   );
 };
 
-export default SubmitPicksForm;
+export default SubmitPicksForm

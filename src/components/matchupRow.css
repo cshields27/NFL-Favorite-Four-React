@@ -40,3 +40,20 @@
   background-color: #4caf50; /* Green */
   color: white;
 }
+
+.over-under-options {
+  display: flex;
+}
+
+.over,
+.under {
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+/* Style for selected over and under buttons */
+.over.selected,
+.under.selected {
+  background-color: #4caf50;
+  color: #fff;
+}

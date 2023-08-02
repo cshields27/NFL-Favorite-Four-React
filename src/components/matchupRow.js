@@ -8,40 +8,17 @@ const getTeamLogoUrl = (teamName) => {
   return `/img/logos/${formattedTeamName}.png`;
 };
 
-const MatchupRow = ({ homeTeam, awayTeam, spread, overUnder, onSelect, selectedOptions }) => {
+const MatchupRow = ({ matchupId, homeTeam, awayTeam, spread, overUnder, onSelect, selectedOptions }) => {
+  console.log(selectedOptions, matchupId)
   const isHomeTeamFavorite = spread < 0;
   const isHomeTeamSelected =
-    (selectedOptions.favorite === homeTeam && isHomeTeamFavorite) ||
-    (selectedOptions.underdog === homeTeam && !isHomeTeamFavorite);
+    (selectedOptions.favorite === matchupId && isHomeTeamFavorite) ||
+    (selectedOptions.underdog === matchupId && !isHomeTeamFavorite);
 
   const isAwayTeamSelected =
-    (selectedOptions.favorite === awayTeam && !isHomeTeamFavorite) ||
-    (selectedOptions.underdog === awayTeam && isHomeTeamFavorite);
-
-  const handleTeamSelect = (team) => {
-    // Check if the selected team is a favorite or an underdog
-    const isFavorite = spread < 0 ? team === homeTeam : team === awayTeam;
-    const isUnderdog = spread < 0 ? team === awayTeam : team === homeTeam;
-
-    // If the selected team is a favorite and is different from the currently selected favorite,
-    // update the selected favorite
-    if (isFavorite && selectedOptions.favorite !== team) {
-      onSelect('favorite', team);
-    }
-
-    // If the selected team is an underdog and is different from the currently selected underdog,
-    // update the selected underdog
-    if (isUnderdog && selectedOptions.underdog !== team) {
-      onSelect('underdog', team);
-    }
-
-    // If the selected team is neither a favorite nor an underdog, reset the selections
-    if (!isFavorite && !isUnderdog) {
-      onSelect('favorite', null);
-      onSelect('underdog', null);
-    }
-  };
-
+    (selectedOptions.favorite === matchupId && !isHomeTeamFavorite) ||
+    (selectedOptions.underdog === matchupId && isHomeTeamFavorite);
+  
   const renderSpread = () => {
     const spreadToFavorite = isHomeTeamFavorite ? spread : -spread;
     return spreadToFavorite < 0 ? spreadToFavorite : `+${spreadToFavorite}`;
@@ -53,7 +30,7 @@ const MatchupRow = ({ homeTeam, awayTeam, spread, overUnder, onSelect, selectedO
         <>
           <div
             className={`team ${isHomeTeamSelected ? 'selected' : ''}`}
-            onClick={() => handleTeamSelect(homeTeam)}
+            onClick={() => onSelect('favorite')}
           >
             <img src={getTeamLogoUrl(homeTeam)} alt={homeTeam} className="team-logo" />
             <p className="team-name">{homeTeam}</p>
@@ -61,7 +38,7 @@ const MatchupRow = ({ homeTeam, awayTeam, spread, overUnder, onSelect, selectedO
           <div className="spread">{renderSpread()}</div>
           <div
             className={`team ${isAwayTeamSelected ? 'selected' : ''}`}
-            onClick={() => handleTeamSelect(awayTeam)}
+            onClick={() => onSelect('underdog')}
           >
             <img src={getTeamLogoUrl(awayTeam)} alt={awayTeam} className="team-logo" />
             <p className="team-name">{awayTeam}</p>
@@ -71,7 +48,7 @@ const MatchupRow = ({ homeTeam, awayTeam, spread, overUnder, onSelect, selectedO
         <>
           <div
             className={`team ${isAwayTeamSelected ? 'selected' : ''}`}
-            onClick={() => handleTeamSelect(awayTeam)}
+            onClick={() => onSelect('favorite')}
           >
             <img src={getTeamLogoUrl(awayTeam)} alt={awayTeam} className="team-logo" />
             <p className="team-name">{awayTeam}</p>
@@ -79,7 +56,7 @@ const MatchupRow = ({ homeTeam, awayTeam, spread, overUnder, onSelect, selectedO
           <div className="spread">{renderSpread()}</div>
           <div
             className={`team ${isHomeTeamSelected ? 'selected' : ''}`}
-            onClick={() => handleTeamSelect(homeTeam)}
+            onClick={() => onSelect('underdog')}
           >
             <img src={getTeamLogoUrl(homeTeam)} alt={homeTeam} className="team-logo" />
             <p className="team-name">{homeTeam}</p>
@@ -88,19 +65,19 @@ const MatchupRow = ({ homeTeam, awayTeam, spread, overUnder, onSelect, selectedO
       )}
       <div className="over-under-options">
         <div
-          className={`over ${selectedOptions.over === homeTeam ? 'selected' : ''}`}
-          onClick={() => onSelect('over', homeTeam)}
+          className={`over ${selectedOptions.over === matchupId ? 'selected' : ''}`}
+          onClick={() => onSelect('over')}
         >
           Over
         </div>
         <div
-          className={`under ${selectedOptions.under === awayTeam ? 'selected' : ''}`}
-          onClick={() => onSelect('under', awayTeam)}
+          className={`under ${selectedOptions.under === matchupId ? 'selected' : ''}`}
+          onClick={() => onSelect('under')}
         >
           Under
         </div>
       </div>
-      <div>Total: {overUnder}</div>
+      <div> {overUnder}</div>
       {/* Add any other matchup row elements as needed */}
     </div>
   );
