@@ -26,12 +26,28 @@ const SubmitPicksForm = () => {
     fetchMatchups();
   }, []);
 
-  console.log(matchups)
   const handleSelectOption = (optionType, matchupId) => {
     setSelectedOptions((prevSelectedOptions) => ({
       ...prevSelectedOptions,
-      [optionType]: matchupId
+      [optionType]: matchupId,
     }));
+  };
+
+  const isFormValid = () => {
+    const { favorite, underdog, over, under } = selectedOptions;
+    if (!favorite || !underdog || !over || !under) {
+      return [false, 'Make 4 selections']
+      
+    }
+    let ret = favorite !== underdog && over !== under;
+    if (favorite == underdog){
+      return [false, 'Underdog and favorite must be in different games'];
+    }
+    else if (over == under){
+      return [false, 'Over and under must be in different games'];
+    }
+
+    return [ret, '']
   };
 
   return (
@@ -45,16 +61,20 @@ const SubmitPicksForm = () => {
             awayTeam={matchup.away_team}
             spread={matchup.spread}
             overUnder={matchup.over_under}
-            onSelect={(optionType) =>
-              handleSelectOption(optionType, matchup.id)
-            }
+            onSelect={(optionType) => handleSelectOption(optionType, matchup.id)}
             selectedOptions={selectedOptions || {}}
           />
         ))}
       </div>
-      <button className='submit-button' disabled={false} onClick={() => console.log(selec)}>Submit Picks</button>
+      <button
+        className="submit-button"
+        disabled={!isFormValid()}
+        onClick={() => console.log(selectedOptions)}
+      >
+        {isFormValid()[0] ? 'Submit Picks' : isFormValid()[1]}
+      </button>
     </div>
   );
 };
 
-export default SubmitPicksForm
+export default SubmitPicksForm;

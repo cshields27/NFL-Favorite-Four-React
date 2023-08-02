@@ -42,7 +42,7 @@
 }
 
 .over-under-options {
-  display: flex;
+  flex: 1
 }
 
 .over,
