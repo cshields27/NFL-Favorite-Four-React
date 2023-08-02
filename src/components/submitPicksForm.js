@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import MatchupRow from './matchupRow';
-import './submitPicksForm.css'
+import './submitPicksForm.css';
 
 const SubmitPicksForm = () => {
   const [matchups, setMatchups] = useState([]);
+  const [selectedOptions, setSelectedOptions] = useState({});
 
   useEffect(() => {
     // Fetch matchups data from the backend API
@@ -20,6 +21,16 @@ const SubmitPicksForm = () => {
     fetchMatchups();
   }, []);
 
+  const handleSelectOption = (optionType, selectedOption, matchupId) => {
+    setSelectedOptions((prevSelectedOptions) => ({
+      ...prevSelectedOptions,
+      [matchupId]: {
+        ...prevSelectedOptions[matchupId],
+        [optionType]: selectedOption,
+      },
+    }));
+  };
+
   return (
     <div className="submit-picks-form">
       <div className="matchup-rows">
@@ -30,6 +41,10 @@ const SubmitPicksForm = () => {
             awayTeam={matchup.away_team}
             spread={matchup.spread}
             overUnder={matchup.over_under}
+            onSelect={(optionType, selectedOption) =>
+              handleSelectOption(optionType, selectedOption, matchup.id)
+            }
+            selectedOptions={selectedOptions[matchup.id] || {}}
           />
         ))}
       </div>
