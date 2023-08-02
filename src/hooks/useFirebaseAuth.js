@@ -22,18 +22,21 @@ const useFirebaseAuth = () => {
   }, [auth]);
 
   const handleLogin = () => {
-    // Create a Google provider object for Google Sign-In
     const provider = new GoogleAuthProvider();
-    provider.setCustomParameters({ prompt: 'select_account' });
 
-    console.log('hi')
-    // Trigger the Google Sign-In pop-up
-    signInWithRedirect(auth, provider)
+    getRedirectResult(auth)
       .then((result) => {
-        // Handle successful login here if needed
+        console.log(result);
       })
       .catch((error) => {
-        // Handle errors here if needed
+        console.error('Error signing in:', error);
+      });
+
+    //signInWithRedirect(auth, provider)
+    signInWithPopup(auth, provider)
+      .then((result) => {
+      })
+      .catch((error) => {
         console.error('Error signing in:', error);
       });
   };

@@ -1,0 +1,21 @@
+/* submitPicksForm.css */
+
+.submit-picks-form {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.submit-picks-heading {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.matchup-rows {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+/* Add any other styling as needed for the form */

@@ -1,0 +1,41 @@
+/* matchupRow.css */
+
+.matchup-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  align-items: center;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.team {
+  display: flex;
+  align-items: center;
+}
+
+.team-logo {
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
+}
+
+.team-name {
+  font-size: 16px;
+  margin-right: 10px;
+}
+
+.selected-indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: green;
+  margin-left: 5px;
+}
+
+.spread,
+.over-under {
+  font-size: 16px;
+  text-align: center;
+}
