@@ -1,5 +1,5 @@
 import React from 'react';
-import './matchupRow.css';
+import './submitPicksForm.css';
 
 const getTeamLogoUrl = (teamName) => {
   // Convert the team name to lowercase and replace spaces with dashes
@@ -18,11 +18,6 @@ const MatchupRow = ({ matchupId, homeTeam, awayTeam, spread, overUnder, onSelect
   const isAwayTeamSelected =
     (selectedOptions.favorite === matchupId && !isHomeTeamFavorite) ||
     (selectedOptions.underdog === matchupId && isHomeTeamFavorite);
-  
-  const renderSpread = () => {
-    const spreadToFavorite = isHomeTeamFavorite ? spread : -spread;
-    return spreadToFavorite < 0 ? spreadToFavorite : `+${spreadToFavorite}`;
-  };
 
   return (
     <div className="matchup-row">
@@ -35,7 +30,7 @@ const MatchupRow = ({ matchupId, homeTeam, awayTeam, spread, overUnder, onSelect
             <img src={getTeamLogoUrl(homeTeam)} alt={homeTeam} className="team-logo" />
             <p className="team-name">{homeTeam}</p>
           </div>
-          <div className="spread">{renderSpread()}</div>
+          <div className="spread">{spread}</div>
           <div
             className={`team ${isAwayTeamSelected ? 'selected' : ''}`}
             onClick={() => onSelect('underdog')}
@@ -53,7 +48,7 @@ const MatchupRow = ({ matchupId, homeTeam, awayTeam, spread, overUnder, onSelect
             <img src={getTeamLogoUrl(awayTeam)} alt={awayTeam} className="team-logo" />
             <p className="team-name">{awayTeam}</p>
           </div>
-          <div className="spread">{renderSpread()}</div>
+          <div className="spread">{spread}</div>
           <div
             className={`team ${isHomeTeamSelected ? 'selected' : ''}`}
             onClick={() => onSelect('underdog')}

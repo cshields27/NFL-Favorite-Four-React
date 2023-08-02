@@ -19,7 +19,6 @@ const SubmitPicks = () => {
 
     fetchMatchups();
   }, []);
-  console.log(matchups)
 
   return (
     <div className='home-container'>

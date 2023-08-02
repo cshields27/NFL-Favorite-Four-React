@@ -27,31 +27,43 @@ const SubmitPicksForm = () => {
   }, []);
 
   const handleSelectOption = (optionType, matchupId) => {
-    setSelectedOptions((prevSelectedOptions) => ({
-      ...prevSelectedOptions,
-      [optionType]: matchupId,
-    }));
+    setSelectedOptions((prevSelectedOptions) => {
+      const newSelectedOptions = { ...prevSelectedOptions };
+
+      // Check if the option is already selected
+      if (prevSelectedOptions[optionType] === matchupId) {
+        newSelectedOptions[optionType] = null;
+      } else {
+        newSelectedOptions[optionType] = matchupId;
+      }
+
+      return newSelectedOptions;
+    });
   };
 
   const isFormValid = () => {
     const { favorite, underdog, over, under } = selectedOptions;
     if (!favorite || !underdog || !over || !under) {
-      return [false, 'Make 4 selections']
-      
+      return [false, 'Make 4 selections'];
     }
-    let ret = favorite !== underdog && over !== under;
-    if (favorite == underdog){
+    if (favorite === underdog) {
       return [false, 'Underdog and favorite must be in different games'];
-    }
-    else if (over == under){
+    } else if (over === under) {
       return [false, 'Over and under must be in different games'];
     }
 
-    return [ret, '']
+    return [true, ''];
   };
 
   return (
     <div className="submit-picks-form">
+      <div className="column-labels">
+        <div className="label">Favorite</div>
+        <div className="label">Spread</div>
+        <div className="label">Underdog</div>
+        <div className="label">Over/Under</div>
+        <div className="label">Total</div>
+      </div>
       <div className="matchup-rows">
         {matchups.map((matchup) => (
           <MatchupRow
@@ -68,7 +80,7 @@ const SubmitPicksForm = () => {
       </div>
       <button
         className="submit-button"
-        disabled={!isFormValid()}
+        disabled={!isFormValid()[0]}
         onClick={() => console.log(selectedOptions)}
       >
         {isFormValid()[0] ? 'Submit Picks' : isFormValid()[1]}
