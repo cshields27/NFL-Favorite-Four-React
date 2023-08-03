@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import MatchupRow from './matchupRow';
+import { useAuth } from '../authContext';
 import './submitPicksForm.css';
 
 const SubmitPicksForm = () => {
+  const { user } = useAuth();
   const [matchups, setMatchups] = useState([]);
   const [selectedOptions, setSelectedOptions] = useState({
     favorite: null,
@@ -10,6 +12,43 @@ const SubmitPicksForm = () => {
     over: null,
     under: null,
   });
+
+  const handleSubmitPicks = async () => {
+    try {
+      // Check if the form is valid before submitting
+      const [isValid, errorMessage] = isFormValid();
+      if (!isValid) {
+        console.error('Form is not valid:', errorMessage);
+        return;
+      }
+      console.log(selectedOptions)
+      console.log(user)
+      // Send the selected options to the backend API
+      const response = await fetch('http://127.0.0.1:8000/api/weekly_picks/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Token ${user.token}`, // Pass the user token as authorization header
+        },
+        body: JSON.stringify({
+          favorite_pick: selectedOptions.favorite,
+          underdog_pick: selectedOptions.underdog,
+          over_pick: selectedOptions.over,
+          under_pick: selectedOptions.under,
+        }),
+      });
+  
+      if (response.ok) {
+        // Picks submitted successfully
+        console.log('Picks submitted successfully!');
+      } else {
+        // Error submitting picks
+        console.error('Error submitting picks:', response);
+      }
+    } catch (error) {
+      console.error('Error submitting picks:', error);
+    }
+  };
 
   useEffect(() => {
     // Fetch matchups data from the backend API
@@ -81,7 +120,7 @@ const SubmitPicksForm = () => {
       <button
         className="submit-button"
         disabled={!isFormValid()[0]}
-        onClick={() => console.log(selectedOptions)}
+        onClick={handleSubmitPicks}
       >
         {isFormValid()[0] ? 'Submit Picks' : isFormValid()[1]}
       </button>

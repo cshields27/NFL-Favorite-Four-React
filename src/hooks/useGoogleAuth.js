@@ -26,27 +26,25 @@ const useGoogleAuth = () => {
         setUser(data.user); // Store user data in state
         setAuthIsLoggedIn(true); // Update the authentication state in the AuthContext
         setAuthUser(data.user); // Update the user data in the AuthContext
-        localStorage.setItem('userToken', data.token); // Store the user token in local storage
+        localStorage.setItem('userToken', data.user.token); // Store the user token in local storage
       })
       .catch((error) => {
         console.error('Error authenticating with Google:', error);
       });
   };
 
-  // this will likely have to be changed a bit
-  useEffect(() => {
+  /*useEffect(() => {
     // Check if the user is already authenticated (e.g., from local storage)
     const storedUserToken = localStorage.getItem('userToken');
     if (storedUserToken) {
       setIsLoggedIn(true);
-      // You might need to fetch the user data from the backend based on the token
-      // and set it to the 'user' state using the 'setUser' function here.
+      //fetchUserData(storedUserToken);
       // Also, update the authentication state in the AuthContext here.
       setAuthIsLoggedIn(true);
       // Update the user data in the AuthContext here.
     }
   }, []); // Empty dependency array ensures this effect runs only once on component mount
-
+*/
   const handleLogin = useGoogleLogin({
     onSuccess: handleLoginSuccess,
   });

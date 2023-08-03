@@ -13,6 +13,7 @@ const Navbar = () => {
     googleLogout();
     setIsLoggedIn(false);
     setUser(null);
+    localStorage.removeItem('userToken');
   };
 
   return (
@@ -38,7 +39,7 @@ const Navbar = () => {
         </div>
         {isLoggedIn ? (
           <button className="navbar-button login" onClick={handleLogout}>
-            {user ? `Hello, ${user.name}` : 'User'} {/* Display user name */}
+            {user ? `Hello, ${user.email} (logout)` : 'Logout'} {/* Display user name */}
           </button>
         ) : (
           <button className="navbar-button login" onClick={handleLogin}>

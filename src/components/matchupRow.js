@@ -9,7 +9,6 @@ const getTeamLogoUrl = (teamName) => {
 };
 
 const MatchupRow = ({ matchupId, homeTeam, awayTeam, spread, overUnder, onSelect, selectedOptions }) => {
-  console.log(selectedOptions, matchupId)
   const isHomeTeamFavorite = spread < 0;
   const isHomeTeamSelected =
     (selectedOptions.favorite === matchupId && isHomeTeamFavorite) ||
