@@ -10,6 +10,7 @@ const SubmitPicks = () => {
   const { isLoggedIn, user } = useAuth(); // Access authentication state and user data from the context
   const { handleLogin } = useGoogleAuth();
   const [matchups, setMatchups] = useState([]);
+  const [currentWeek, setCurrentWeek] = useState(null);
 
   // Use useEffect to fetch the matchups data when the component mounts
   useEffect(() => {
@@ -17,6 +18,7 @@ const SubmitPicks = () => {
       const response = await fetch('http://127.0.0.1:8000/api/upcoming_week_matchups/');
       const data = await response.json();
       setMatchups(data.matchups);
+      setCurrentWeek(data.week_number);
     };
 
     fetchMatchups();
@@ -29,7 +31,7 @@ const SubmitPicks = () => {
         <div className="submit-picks-content">
           <h1 className="submit-picks-heading">Submit Your Picks</h1>
           {isLoggedIn ? (
-            <SubmitPicksForm matchups={matchups} />
+            <SubmitPicksForm matchups={matchups} currentWeek={currentWeek} />
           ) : (
             <div>
               <p className="submit-picks-paragraph">Please log in to submit your picks.</p>

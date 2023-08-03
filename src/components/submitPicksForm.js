@@ -3,9 +3,8 @@ import MatchupRow from './matchupRow';
 import { useAuth } from '../authContext';
 import './submitPicksForm.css';
 
-const SubmitPicksForm = () => {
+const SubmitPicksForm = (props) => {
   const { user } = useAuth();
-  const [matchups, setMatchups] = useState([]);
   const [selectedOptions, setSelectedOptions] = useState({
     favorite: null,
     underdog: null,
@@ -22,7 +21,6 @@ const SubmitPicksForm = () => {
         return;
       }
       console.log(selectedOptions)
-      console.log(user)
       // Send the selected options to the backend API
       const response = await fetch('http://127.0.0.1:8000/api/weekly_picks/', {
         method: 'POST',
@@ -35,6 +33,7 @@ const SubmitPicksForm = () => {
           underdog_pick: selectedOptions.underdog,
           over_pick: selectedOptions.over,
           under_pick: selectedOptions.under,
+          week_number: props.currentWeek,
         }),
       });
   
@@ -49,21 +48,6 @@ const SubmitPicksForm = () => {
       console.error('Error submitting picks:', error);
     }
   };
-
-  useEffect(() => {
-    // Fetch matchups data from the backend API
-    const fetchMatchups = async () => {
-      try {
-        const response = await fetch('http://127.0.0.1:8000/api/upcoming_week_matchups/');
-        const data = await response.json();
-        setMatchups(data.matchups);
-      } catch (error) {
-        console.error('Error fetching matchups:', error);
-      }
-    };
-
-    fetchMatchups();
-  }, []);
 
   const handleSelectOption = (optionType, matchupId) => {
     setSelectedOptions((prevSelectedOptions) => {
@@ -104,7 +88,7 @@ const SubmitPicksForm = () => {
         <div className="label">Total</div>
       </div>
       <div className="matchup-rows">
-        {matchups.map((matchup) => (
+        {props.matchups.map((matchup) => (
           <MatchupRow
             key={matchup.id}
             matchupId={matchup.id}
