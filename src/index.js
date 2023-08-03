@@ -1,6 +1,9 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { GoogleOAuthProvider } from '@react-oauth/google';
+import { AuthProvider } from './authContext';
+
 
 import './style.css'
 import Home from './views/home'
@@ -21,6 +24,8 @@ const firebaseApp = initializeApp(firebaseConfig);
 
 const App = () => {
   return (
+    <GoogleOAuthProvider clientId='326321185901-sfhn7khp0t1hr8vkc95ph6se20j1k300.apps.googleusercontent.com'>
+    <AuthProvider>
     <Router>
       <div>
         <Route component={Home} exact path="/" />
@@ -28,6 +33,8 @@ const App = () => {
         <Route component={SubmitPicks} exact path="/submit-picks"/>
       </div>
     </Router>
+    </AuthProvider>
+    </GoogleOAuthProvider>
   )
 }
 

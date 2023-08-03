@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import Navbar from '../components/navbar';
 import Footer from '../components/footer';
-import useFirebaseAuth from '../hooks/useFirebaseAuth';
+import { useAuth } from '../authContext';
+import useGoogleAuth from '../hooks/useGoogleAuth';
 import SubmitPicksForm from '../components/submitPicksForm';
 import './submitpicks.css';
 
 const SubmitPicks = () => {
-  const { user, handleLogin } = useFirebaseAuth();
+  const { isLoggedIn, user } = useAuth(); // Access authentication state and user data from the context
+  const { handleLogin } = useGoogleAuth();
   const [matchups, setMatchups] = useState([]);
 
   // Use useEffect to fetch the matchups data when the component mounts
@@ -26,7 +28,7 @@ const SubmitPicks = () => {
       <div className="submit-picks-container">
         <div className="submit-picks-content">
           <h1 className="submit-picks-heading">Submit Your Picks</h1>
-          {user ? (
+          {isLoggedIn ? (
             <SubmitPicksForm matchups={matchups} />
           ) : (
             <div>
