@@ -1,0 +1,70 @@
+/* leagueForm.css */
+
+/* Form container */
+.league-form-container {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f7f7f7;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Form heading */
+.league-form-container h2 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Form row container */
+.league-form-container .form-row {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 15px;
+}
+
+/* Form labels */
+.league-form-container label {
+  font-weight: bold;
+}
+
+/* Input fields */
+.league-form-container input,
+.league-form-container select {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+/* Select dropdown */
+.league-form-container select {
+  cursor: pointer;
+}
+
+/* Submit button */
+.league-form-container button[type="submit"] {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 100%;
+}
+
+.league-form-container button[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+/* Add some margin below the form */
+.league-form-container {
+  margin-bottom: 20px;
+}

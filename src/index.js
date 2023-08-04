@@ -11,14 +11,13 @@ import './style.css'
 import Home from './views/home'
 import About from './views/about';
 import SubmitPicks from './views/submitpicks'
-
+import Leagues from './views/leagues'
 
 const options = {
     timeout: 3000, // Duration in milliseconds (3 seconds in this case)
     position: positions.MIDDLE,
     transition: transitions.SCALE,
 }
-
 
 const App = () => {
   return (
@@ -28,6 +27,7 @@ const App = () => {
     <Router>
       <div>
         <Route component={Home} exact path="/" />
+        <Route component={Leagues} exact path="/leagues"/>
         <Route component={About} exact path="/about" />
         <Route component={SubmitPicks} exact path="/submit-picks"/>
       </div>

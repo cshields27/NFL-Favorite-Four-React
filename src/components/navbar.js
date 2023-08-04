@@ -26,10 +26,8 @@ const Navbar = () => {
       </Link>
       <div className="navbar-buttons">
         <button className="navbar-button">Leaderboard</button>
-        <button className="navbar-button disabled">Leagues (Coming Soon)</button>
-        <Link to="/about" className="navbar-button">
-          About
-        </Link>
+        <Link to="/leagues" className="navbar-button"> Leagues </Link>
+        <Link to="/about" className="navbar-button"> About </Link>
         <div className="navbar-icon">
           <a
             href="https://twitter.com/connorshieldss"
