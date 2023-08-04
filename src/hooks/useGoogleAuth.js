@@ -1,6 +1,6 @@
 // hooks/useGoogleAuth.js
 import { useState, useEffect } from 'react';
-import { useGoogleLogin } from '@react-oauth/google';
+import { useGoogleLogin, googleLogout } from '@react-oauth/google';
 import { useAuth } from '../authContext'; // Import the AuthContext
 
 const useGoogleAuth = () => {
@@ -33,23 +33,41 @@ const useGoogleAuth = () => {
       });
   };
 
-  /*useEffect(() => {
+  useEffect(() => {
     // Check if the user is already authenticated (e.g., from local storage)
     const storedUserToken = localStorage.getItem('userToken');
     if (storedUserToken) {
-      setIsLoggedIn(true);
-      //fetchUserData(storedUserToken);
-      // Also, update the authentication state in the AuthContext here.
-      setAuthIsLoggedIn(true);
-      // Update the user data in the AuthContext here.
+      fetch('http://localhost:8000/api/current_user/', {
+        headers: {
+          Authorization: `Token ${storedUserToken}`,
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          // Update the authentication state and user data
+          setIsLoggedIn(true);
+          setUser(data.user);
+          setAuthIsLoggedIn(true);
+          setAuthUser(data.user);
+          console.log(data)
+        })
+        .catch((error) => {
+          console.error('Error fetching user data:', error);
+          handleLogout();
+        });
     }
-  }, []); // Empty dependency array ensures this effect runs only once on component mount
-*/
+  }, []);
+
   const handleLogin = useGoogleLogin({
     onSuccess: handleLoginSuccess,
   });
+  
+  const handleLogout = () => {
+    googleLogout();
+    localStorage.removeItem('userToken');
+  }
 
-  return { isLoggedIn, user, handleLogin };
+  return { isLoggedIn, user, handleLogin, handleLogout };
 };
 
 export default useGoogleAuth;
