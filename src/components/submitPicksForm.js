@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import MatchupRow from './matchupRow';
 import { useAuth } from '../authContext';
+import { useAlert } from 'react-alert'
 import './submitPicksForm.css';
 
 const SubmitPicksForm = (props) => {
+  const alert = useAlert()
   const { user } = useAuth();
   const [selectedOptions, setSelectedOptions] = useState({
     favorite: null,
@@ -31,7 +33,7 @@ const SubmitPicksForm = (props) => {
         console.error('Form is not valid:', errorMessage);
         return;
       }
-      console.log(selectedOptions)
+
       // Send the selected options to the backend API
       const response = await fetch('http://127.0.0.1:8000/api/weekly_picks/', {
         method: 'POST',
@@ -47,10 +49,14 @@ const SubmitPicksForm = (props) => {
           week_number: props.currentWeek,
         }),
       });
-  
+
       if (response.ok) {
         // Picks submitted successfully
         console.log('Picks submitted successfully!');
+        alert.show(
+          <div style={{ backgroundColor: '#4CAF50', color: 'white', padding: '10px', borderRadius: '4px' }}>
+            Success!
+          </div>)
       } else {
         // Error submitting picks
         console.error('Error submitting picks:', response);
