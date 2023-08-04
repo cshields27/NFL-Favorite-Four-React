@@ -12,6 +12,17 @@ const SubmitPicksForm = (props) => {
     under: null,
   });
 
+  useEffect(() => {
+    if (props.userPicks) {
+      setSelectedOptions({
+        favorite: props.userPicks.favorite_pick,
+        underdog: props.userPicks.underdog_pick,
+        over: props.userPicks.over_pick,
+        under: props.userPicks.under_pick,
+      });
+    }
+  }, [props.userPicks]);
+
   const handleSubmitPicks = async () => {
     try {
       // Check if the form is valid before submitting
