@@ -13,7 +13,7 @@ const About = () => {
           <h2>About Us</h2>
           <p>
             NFL Favorite Four is a website that allows football fans to compete
-            with each other by picking their favorite, an underdog, an over, and
+            with each other by picking just a few selections: a favorite, an underdog, an over, and
             an under for each week's games. The goal is to showcase your football
             knowledge and strategic insights while having fun with friends and
             other fans.

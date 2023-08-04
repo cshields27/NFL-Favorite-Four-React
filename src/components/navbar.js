@@ -39,7 +39,7 @@ const Navbar = () => {
         </div>
         {isLoggedIn ? (
           <button className="navbar-button login" onClick={handleLogout}>
-            {user ? `Hello, ${user.email} (logout)` : 'Logout'} {/* Display user name */}
+            {user ? `Logout ${user.email}` : 'Logout'} {/* Display user name */}
           </button>
         ) : (
           <button className="navbar-button login" onClick={handleLogin}>

@@ -48,7 +48,7 @@ const SubmitPicks = () => {
       <Navbar></Navbar>
       <div className="submit-picks-container">
         <div className="submit-picks-content">
-          <h1 className="submit-picks-heading">{isLoggedIn && userPicks ? 'Update' : 'Submit'} Your Picks</h1>
+          <h1 className="submit-picks-heading">{isLoggedIn && userPicks ? 'Update' : 'Submit'} Your Picks - Week {currentWeek}</h1>
           {isLoggedIn ? (
             <SubmitPicksForm matchups={matchups} currentWeek={currentWeek} userPicks={userPicks} />
           ) : (
