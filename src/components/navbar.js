@@ -3,16 +3,19 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../authContext'; // Custom hook
 import useGoogleAuth from '../hooks/useGoogleAuth'; // Custom hook
 import { googleLogout } from '@react-oauth/google';
+import { useAlert } from 'react-alert';
 import './navbar.css';
 
 const Navbar = () => {
   const { isLoggedIn, setIsLoggedIn, user, setUser } = useAuth(); // Access authentication state and user data from the context
   const { handleLogin } = useGoogleAuth();
+  const alert = useAlert();
 
   const handleLogout = () => {
     googleLogout();
     setIsLoggedIn(false);
     setUser(null);
+    alert.success('Logged out.');
     localStorage.removeItem('userToken');
   };
 

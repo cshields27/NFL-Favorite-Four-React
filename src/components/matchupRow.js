@@ -1,7 +1,7 @@
 import React from 'react';
 import './submitPicksForm.css';
 
-const getTeamLogoUrl = (teamName) => {
+export const getTeamLogoUrl = (teamName) => {
   // Convert the team name to lowercase and replace spaces with dashes
   const formattedTeamName = teamName.toLowerCase().replace(/\s+/g, '-');
   // Construct the URL based on the formatted team name

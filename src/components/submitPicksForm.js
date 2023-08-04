@@ -53,6 +53,7 @@ const SubmitPicksForm = (props) => {
       if (response.ok) {
         // Picks submitted successfully
         console.log('Picks submitted successfully!');
+        props.onPicksUpdate();
         alert.show(
           <div style={{ backgroundColor: '#4CAF50', color: 'white', padding: '10px', borderRadius: '4px' }}>
             Success!

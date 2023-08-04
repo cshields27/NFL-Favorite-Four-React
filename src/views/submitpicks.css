@@ -47,3 +47,7 @@
 .submit-picks-button:hover {
   opacity: 0.8;
 }
+
+.pick-summary {
+  margin-bottom: 20px;
+}
