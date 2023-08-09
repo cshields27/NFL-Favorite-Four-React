@@ -1,9 +1,11 @@
-// leagueForm.js
-
 import React, { useState } from 'react';
+import { useAuth } from '../authContext';
+import { useAlert } from 'react-alert'
 import './leagueForm.css';
 
 const LeagueForm = () => {
+  const alert = useAlert()
+  const { user } = useAuth();
   const [formType, setFormType] = useState('join'); // Track the selected form type (join or create)
   const [leagueName, setLeagueName] = useState('');
   const [passcode, setPasscode] = useState('');
@@ -12,11 +14,56 @@ const LeagueForm = () => {
     setFormType(event.target.value);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
+    if (user == null){
+      console.log('Must be logged in');
+      return -1;
+    }
     event.preventDefault();
-    // Implement join or create league logic here based on the selected form type
-    console.log('Form submitted!', formType, leagueName, passcode);
-  };
+  
+    try {
+      if (formType === 'join') {
+        const response = await fetch(`http://127.0.0.1:8000/api/leagues/join/`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Token ${user.token}`,
+          },
+          body: JSON.stringify({ name: leagueName, passcode }),
+        });
+        if (response.ok) {
+          const data = await response.json();
+          console.log('Joined league', data);
+          alert.show('League joined!');
+        } 
+        else {
+          const errorData = await response.json();
+          alert.error(errorData.message);
+        }
+      } 
+      else if (formType === 'create') {
+        const response = await fetch(`http://127.0.0.1:8000/api/leagues/create/`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Token ${user.token}`,
+          },
+          body: JSON.stringify({ name: leagueName, passcode }),
+        });
+        if (response.ok) {
+          const data = await response.json();
+          console.log('Created league', data);
+          alert.show('League created!');
+        } 
+        else {
+          const errorData = await response.json();
+          alert.error(errorData.message);
+        }
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error);
+    }
+  };  
 
   return (
     <div className="league-form-container">
@@ -54,7 +101,7 @@ const LeagueForm = () => {
             onChange={(e) => setPasscode(e.target.value)}
           />
         </div>
-        <button type="submit">Submit</button>
+        <button type="submit" onClick={(e) => handleSubmit(e)}>Submit</button>
       </form>
     </div>
   );
