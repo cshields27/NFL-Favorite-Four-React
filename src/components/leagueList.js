@@ -42,7 +42,9 @@ const LeagueList = () => {
 
   const fetchLeagueList = async () => {
     if (!user){
-      setLeagues([])
+      setLeagues([]);
+      setMembers([]);
+      setSelectedLeague('');
       return -1
     }
     try {
