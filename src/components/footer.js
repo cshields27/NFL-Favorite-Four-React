@@ -21,7 +21,7 @@ const Footer = () => {
             className="footer-image"
           />
         </a>
-        <Link to="/" className="footer-link button-clean button">
+        <Link to="/about" className="footer-link button-clean button">
           About
         </Link>
       </div>

@@ -25,7 +25,6 @@ const Navbar = () => {
         NFL Favorite Four
       </Link>
       <div className="navbar-buttons">
-        <button className="navbar-button">Leaderboard</button>
         <Link to="/leagues" className="navbar-button"> Leagues </Link>
         <Link to="/about" className="navbar-button"> About </Link>
         <div className="navbar-icon">

@@ -49,7 +49,6 @@ const useGoogleAuth = () => {
           setUser(data.user);
           setAuthIsLoggedIn(true);
           setAuthUser(data.user);
-          console.log(data)
         })
         .catch((error) => {
           console.error('Error fetching user data:', error);
