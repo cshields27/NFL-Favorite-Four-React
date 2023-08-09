@@ -135,19 +135,19 @@ const LeagueList = () => {
           <table>
             <thead>
               <tr>
-                <th>User ID</th>
-                <th>User Score</th>
-                <th>User Picks</th>
+                <th>User</th>
+                <th>W</th>
+                <th>L</th>
+                <th>Picks</th>
               </tr>
             </thead>
             <tbody>
               {members.map((member) => (
                 <tr key={member.user_id}>
-                  <td>{member.user_email}</td>
-                  <td>0</td> {/* User score */}
-                  <td> 0{/* User picks */}
-                    {/* ... */}
-                  </td>
+                  <td>{member.user_email.split('@')[0]}</td>
+                  <td>{member.wins}</td>
+                  <td>{member.losses}</td>
+                  <td>no week chosen</td>
                 </tr>
               ))}
             </tbody>

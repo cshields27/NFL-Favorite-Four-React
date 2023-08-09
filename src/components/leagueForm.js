@@ -17,6 +17,8 @@ const LeagueForm = () => {
   const handleSubmit = async (event) => {
     if (user == null){
       console.log('Must be logged in');
+      alert.error('Must be logged in');
+      event.preventDefault();
       return -1;
     }
     event.preventDefault();
