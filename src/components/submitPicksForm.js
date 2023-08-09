@@ -3,6 +3,7 @@ import MatchupRow from './matchupRow';
 import { useAuth } from '../authContext';
 import { useAlert } from 'react-alert'
 import './submitPicksForm.css';
+import config from '../config'
 
 const SubmitPicksForm = (props) => {
   const alert = useAlert()
@@ -35,7 +36,7 @@ const SubmitPicksForm = (props) => {
       }
 
       // Send the selected options to the backend API
-      const response = await fetch('http://127.0.0.1:8000/api/weekly_picks/', {
+      const response = await fetch(`${config.API_URL}/api/weekly_picks/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

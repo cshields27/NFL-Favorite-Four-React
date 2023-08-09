@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../authContext';
+import config from '../config'
 import './leagueList.css'
 
 const LeagueList = () => {
@@ -32,7 +33,7 @@ const LeagueList = () => {
 
   const fetchWeekList = async() => {
     try {
-      const response = await fetch(`http://127.0.0.1:8000/api/get_past_weeks/`);
+      const response = await fetch(`${config.API_URL}/api/get_past_weeks/`);
       const data = await response.json();
       setWeekOptions(data);
     } catch (error) {
@@ -48,7 +49,7 @@ const LeagueList = () => {
       return -1
     }
     try {
-      const response = await fetch(`http://127.0.0.1:8000/api/leagues/user_leagues/`, {
+      const response = await fetch(`${config.API_URL}/api/leagues/user_leagues/`, {
         headers: {
           Authorization: `Token ${user.token}`,
         },
@@ -62,7 +63,7 @@ const LeagueList = () => {
 
   const fetchLeagueMembers = async (leagueName) => {
     try {
-      const response = await fetch('http://127.0.0.1:8000/api/leagues/league_members/', {
+      const response = await fetch(`${config.API_URL}/api/leagues/league_members/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -82,7 +83,7 @@ const LeagueList = () => {
 
   const fetchLeaguePicks = async (leagueName, weekNumber) => {
     try {
-      const response = await fetch('http://127.0.0.1:8000/api/leagues/league_week_picks/', {
+      const response = await fetch(`${config.API_URL}/api/leagues/league_week_picks/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

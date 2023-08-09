@@ -5,6 +5,7 @@ import PickSummary from '../components/pickSummary';
 import { useAuth } from '../authContext';
 import useGoogleAuth from '../hooks/useGoogleAuth';
 import SubmitPicksForm from '../components/submitPicksForm';
+import config from '../config'
 import './submitpicks.css';
 
 const SubmitPicks = () => {
@@ -17,13 +18,13 @@ const SubmitPicks = () => {
   const fetchData = async () => {
     try {
       setUserPicks(null);
-      const matchupsResponse = await fetch('http://127.0.0.1:8000/api/upcoming_week_matchups/');
+      const matchupsResponse = await fetch(`${config.API_URL}/api/upcoming_week_matchups/`);
       const matchupsData = await matchupsResponse.json();
       setMatchups(matchupsData.matchups);
       setCurrentWeek(matchupsData.week_number);
 
       if (user && isLoggedIn) {
-        const userPicksResponse = await fetch(`http://127.0.0.1:8000/api/user_picks_for_next_week/`, {
+        const userPicksResponse = await fetch(`${config.API_URL}/api/user_picks_for_next_week/`, {
           headers: {
             Authorization: `Token ${user.token}`,
           },

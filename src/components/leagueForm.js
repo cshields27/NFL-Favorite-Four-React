@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useAuth } from '../authContext';
 import { useAlert } from 'react-alert'
 import './leagueForm.css';
+import config from '../config'
 
 const LeagueForm = () => {
   const alert = useAlert()
@@ -25,7 +26,7 @@ const LeagueForm = () => {
   
     try {
       if (formType === 'join') {
-        const response = await fetch(`http://127.0.0.1:8000/api/leagues/join/`, {
+        const response = await fetch(`${config.API_URL}/api/leagues/join/`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -44,7 +45,7 @@ const LeagueForm = () => {
         }
       } 
       else if (formType === 'create') {
-        const response = await fetch(`http://127.0.0.1:8000/api/leagues/create/`, {
+        const response = await fetch(`${config.API_URL}/api/leagues/create/`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
