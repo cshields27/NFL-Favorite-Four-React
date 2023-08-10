@@ -8,7 +8,7 @@ export const getTeamLogoUrl = (teamName) => {
   return `/img/logos/${formattedTeamName}.png`;
 };
 
-const MatchupRow = ({ matchupId, homeTeam, awayTeam, spread, overUnder, onSelect, selectedOptions }) => {
+const MatchupRow = ({ matchupId, homeTeam, awayTeam, spread, overUnder, onSelect, selectedOptions, hasStarted }) => {
   const isHomeTeamFavorite = spread < 0;
   const isHomeTeamSelected =
     (selectedOptions.favorite === matchupId && isHomeTeamFavorite) ||
@@ -24,7 +24,7 @@ const MatchupRow = ({ matchupId, homeTeam, awayTeam, spread, overUnder, onSelect
   };
 
   return (
-    <div className="matchup-row">
+    <div className={`matchup-row ${hasStarted ? 'started' : ''}`}>
       {isHomeTeamFavorite ? (
         <>
           <div

@@ -36,6 +36,10 @@
   border-radius: 5px;
 }
 
+.started {
+  background-color: rgb(25, 26, 26);
+}
+
 .team {
   display: flex;
   flex-direction: column;

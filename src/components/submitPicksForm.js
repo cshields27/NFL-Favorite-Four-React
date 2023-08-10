@@ -70,7 +70,29 @@ const SubmitPicksForm = (props) => {
     }
   };
 
+  const hasStartedMatchup = (matchupId) => {
+    const matchup = props.matchups.find((m) => m.id === matchupId);
+    if (matchup) {
+      const startTime = new Date(matchup.start_time); // Convert start_time string to a Date object
+      const currentTime = new Date();
+      return startTime <= currentTime; // Check if the matchup has started
+    }
+    return false;
+  };
+
   const handleSelectOption = (optionType, matchupId) => {
+    // Cannot swap to or from started matchups
+    // Check if the current selected option is for a matchup that has started
+    const selectedOptionMatchup = selectedOptions[optionType];
+    if (selectedOptionMatchup && hasStartedMatchup(selectedOptionMatchup)) {
+      return;
+    }
+
+    // Check if the newly picked matchup has started
+    if (hasStartedMatchup(matchupId)) {
+      return;
+    }
+
     setSelectedOptions((prevSelectedOptions) => {
       const newSelectedOptions = { ...prevSelectedOptions };
 
@@ -119,6 +141,7 @@ const SubmitPicksForm = (props) => {
             overUnder={matchup.over_under}
             onSelect={(optionType) => handleSelectOption(optionType, matchup.id)}
             selectedOptions={selectedOptions || {}}
+            hasStarted={hasStartedMatchup(matchup.id)}
           />
         ))}
       </div>
