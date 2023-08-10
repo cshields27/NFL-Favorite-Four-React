@@ -8,7 +8,7 @@ const Hero = () => {
       <div className="hero-heading">
         <h1 className="hero-header">Compete with fans across the NFL</h1>
         <p className="hero-caption">
-          Invite friends and submit weekly picks for a favorite, an underdog, an over, and an under!
+          Invite friends and showcase your skills by submitting weekly picks for a favorite, an underdog, an over, and an under!
         </p>
       </div>
       <div className="hero-buttons">

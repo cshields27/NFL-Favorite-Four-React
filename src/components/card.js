@@ -15,7 +15,7 @@ const Card = () => {
       <div className="card-content">
         <h2 className="card-header">Put your football knowledge to the test</h2>
         <p className="card-description">
-          Don't let your sharp picks get diluted in a pool where you're forced to pick every spread, losing your edge to a random coworker who lucked out on the Titans - Jags result. By only taking 4 picks a week, you have the flexibility to show everyone that You Know Ball.
+          Don't let your sharp picks get diluted in a pool where you're forced to pick every spread, losing your edge to a random coworker who lucked out on the Titans - Jags result. By only taking 4 picks a week, you have the flexibility to show everyone that you know ball.
         </p>
         <button className="card-learn button">
           <Link to="/submit-picks" className="card-text">
