@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import MatchupRow from './matchupRow';
+import useGoogleAuth from '../hooks/useGoogleAuth';
 import { useAuth } from '../authContext';
 import { useAlert } from 'react-alert'
 import './submitPicksForm.css';
@@ -7,7 +8,8 @@ import config from '../config'
 
 const SubmitPicksForm = (props) => {
   const alert = useAlert()
-  const { user } = useAuth();
+  const { isLoggedIn, user } = useAuth();
+  const { handleLogin } = useGoogleAuth();
   const [selectedOptions, setSelectedOptions] = useState({
     favorite: null,
     underdog: null,
@@ -145,13 +147,19 @@ const SubmitPicksForm = (props) => {
           />
         ))}
       </div>
-      <button
+      { isLoggedIn ?
+      (<button
         className="submit-button"
         disabled={!isFormValid()[0]}
         onClick={handleSubmitPicks}
       >
         {isFormValid()[0] ? 'Submit Picks' : isFormValid()[1]}
       </button>
+      ) : 
+      (<button onClick={handleLogin} className="submit-picks-button">
+          Login with Google to Submit Picks
+       </button>)
+       }
     </div>
   );
 };

@@ -57,16 +57,12 @@ const SubmitPicks = () => {
             <PickSummary userPicks={userPicks} matchups={matchups} currentWeek={currentWeek}/>
           )}
           <h1 className="submit-picks-heading">{isLoggedIn && userPicks ? 'Update' : 'Submit'} Your Picks - Week {currentWeek}</h1>
-          {isLoggedIn ? (
-            <SubmitPicksForm matchups={matchups} currentWeek={currentWeek} userPicks={userPicks} onPicksUpdate={handlePicksUpdate}/>
-          ) : (
-            <div>
-              <p className="submit-picks-paragraph">Please log in to submit your picks.</p>
-              <button onClick={handleLogin} className="submit-picks-button">
-                Login with Google
-              </button>
-            </div>
-          )}
+          <p> Select 1 favorite, 1 underdog, 1 over, and 1 under. 
+            Click on a team logo to select it as your favorite or underdog. 
+            Click on the "over" or "under" to select that matchup for each of your total picks.
+            Login and come back later to see how your picks fared!
+          </p>
+          <SubmitPicksForm matchups={matchups} currentWeek={currentWeek} userPicks={userPicks} onPicksUpdate={handlePicksUpdate}/>
         </div>
       </div>
       <Footer></Footer>
