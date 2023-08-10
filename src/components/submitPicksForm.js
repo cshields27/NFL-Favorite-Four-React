@@ -61,6 +61,8 @@ const SubmitPicksForm = (props) => {
           </div>)
       } else {
         // Error submitting picks
+        const errorData = await response.json();
+        alert.error(errorData.message);
         console.error('Error submitting picks:', response);
       }
     } catch (error) {
