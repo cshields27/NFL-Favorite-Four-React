@@ -25,6 +25,7 @@ const Navbar = () => {
         NFL Favorite Four
       </Link>
       <div className="navbar-buttons">
+      <Link to="/submit-picks" className="navbar-button"> Submit Picks </Link>
         <Link to="/leagues" className="navbar-button"> Leagues </Link>
         <Link to="/about" className="navbar-button"> About </Link>
         <div className="navbar-icon">
@@ -39,7 +40,7 @@ const Navbar = () => {
         </div>
         {isLoggedIn ? (
           <button className="navbar-button login" onClick={handleLogout}>
-            {user ? `Logout ${user.email}` : 'Logout'} {/* Display user name */}
+            {user ? `Logout ${user.email.split('@')[0]}` : 'Logout'} {/* Display user name */}
           </button>
         ) : (
           <button className="navbar-button login" onClick={handleLogin}>
