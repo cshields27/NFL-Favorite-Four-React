@@ -72,9 +72,20 @@
   }
 
   .navbar-button {
-    margin-right: 0;
+    margin: .8rem;
     margin-bottom: 0.5rem;
     width: 100%;
     text-align: center;
+  }
+
+  .navbar-icon img {
+    width: 80%;
+    height: 80%;
+    margin: 1rem;
+  }
+
+  .navbar-button.login {
+    width: 50%;
+    font-size: .6rem;
   }
 }
