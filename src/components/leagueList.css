@@ -1,3 +1,5 @@
+/* leagueList.css */
+
 .league-list-container {
   margin: 20px;
 }
@@ -7,6 +9,13 @@
   align-items: center;
   justify-content: space-between;
   margin-bottom: 20px;
+}
+
+.league-header {
+  background-color: #f7f7f7;
+  padding: 10px;
+  border: 1px solid #ddd;
+  margin-bottom: 10px;
 }
 
 table {
@@ -48,4 +57,50 @@ select {
 /* Style the disabled option */
 option[disabled] {
   color: #999;
+}
+
+/* Style for the confirmation dialog */
+/* The ::-webkit-dialog pseudo-element targets the Chrome browser */
+::-webkit-dialog {
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+::-webkit-dialog-title {
+  font-size: 18px;
+  padding: 15px;
+  background-color: #f0f0f0;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+::-webkit-dialog-message {
+  font-size: 16px;
+  padding: 15px;
+}
+
+::-webkit-dialog-button-container {
+  margin-top: 20px;
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px;
+  background-color: #f0f0f0;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+::-webkit-dialog-button {
+  font-size: 16px;
+  padding: 8px 15px;
+  margin-left: 10px;
+  cursor: pointer;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+}
+
+::-webkit-dialog-button:hover {
+  background-color: #0056b3;
 }
