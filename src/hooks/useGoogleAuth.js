@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import { useGoogleLogin, googleLogout } from '@react-oauth/google';
 import { useAuth } from '../authContext'; // Import the AuthContext
+import config from '../config'
 
 const useGoogleAuth = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -12,7 +13,7 @@ const useGoogleAuth = () => {
 
   const handleLoginSuccess = (tokenResponse) => {
     // Call the API endpoint to send the Google authentication token to Django
-    fetch('http://localhost:8000/auth/google/', {
+    fetch(`${config.API_URL}/auth/google/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
