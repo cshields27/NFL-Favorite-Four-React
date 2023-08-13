@@ -38,7 +38,7 @@ const useGoogleAuth = () => {
     // Check if the user is already authenticated (e.g., from local storage)
     const storedUserToken = localStorage.getItem('userToken');
     if (storedUserToken) {
-      fetch('http://localhost:8000/api/current_user/', {
+      fetch(`${config.API_URL}/api/current_user/`, {
         headers: {
           Authorization: `Token ${storedUserToken}`,
         },
