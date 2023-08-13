@@ -6,14 +6,19 @@ import LeagueList from '../components/leagueList';
 import './leagues.css';
 
 const Leagues = () => {
+  const [refreshLeagueList, setRefreshLeagueList] = useState(false);
+
+  const handleRefreshLeagueList = () => {
+    setRefreshLeagueList(!refreshLeagueList);
+  };
 
   return (
     <div className='home-container'> 
       <Navbar />
       <div className="league-page-container">
         <div className="league-page-content">
-          <LeagueList />
-          <LeagueForm />
+          <LeagueList refresh={refreshLeagueList}/>
+          <LeagueForm onJoinCreateLeague={handleRefreshLeagueList}/>
         </div>
       </div>
       <Footer />

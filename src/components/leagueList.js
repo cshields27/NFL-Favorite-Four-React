@@ -5,18 +5,30 @@ import { useAuth } from '../authContext';
 import config from '../config';
 import './leagueList.css';
 
-const LeagueList = () => {
+const Pagination = ({ currentPage, totalPages, onPageChange }) => {
+  return (
+      <div className="pagination">
+          <button onClick={() => onPageChange(currentPage - 1)} disabled={currentPage === 1}>Previous</button>
+          <span>{currentPage} of {totalPages}</span>
+          <button onClick={() => onPageChange(currentPage + 1)} disabled={currentPage === totalPages}>Next</button>
+      </div>
+  );
+};
+
+const LeagueList = ({ refresh }) => {
   const { user } = useAuth();
   const [leagues, setLeagues] = useState([]); // list of {name: name, passcode: passcode}
   const [selectedLeague, setSelectedLeague] = useState({name: '', passcode: ''});
   const [selectedWeek, setSelectedWeek] = useState('');
   const [members, setMembers] = useState([]);
   const [weekOptions, setWeekOptions] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
   useEffect(() => {
     fetchLeagueList();
     fetchWeekList();
-  }, [user]);
+  }, [user, refresh]);
 
   useEffect(() => {
     if (selectedLeague.name) {
@@ -39,6 +51,8 @@ const LeagueList = () => {
       setLeagues([]);
       setMembers([]);
       setSelectedLeague({name: '', passcode: ''});
+      setCurrentPage(1);
+      setTotalPages(1);
       return -1;
     }
     try {
@@ -48,15 +62,15 @@ const LeagueList = () => {
         },
       });
       const data = await response.json();
-      setLeagues(data);
+      setLeagues(Array.isArray(data) ? data : []);
     } catch (error) {
       console.error('Error fetching league list:', error);
     }
   };
 
-  const fetchLeagueMembers = async (leagueName) => {
+  const fetchLeagueMembers = async (leagueName, page=1) => {
     try {
-      const response = await fetch(`${config.API_URL}/api/leagues/league_members/`, {
+      const response = await fetch(`${config.API_URL}/api/leagues/league_members/?page=${page}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -67,18 +81,17 @@ const LeagueList = () => {
         }),
       });
       const data = await response.json();
-      setMembers(data);
+      console.log(data);
+      setMembers(data.results);
+      setCurrentPage(page);
+      const pageSize = 20; // HAS to be in line with backend - TODO fix this and add custom pagination
+      setTotalPages(Math.ceil(data.count / pageSize));
     } catch (error) {
       console.error('Error fetching league members:', error);
     }
   };
 
-  const handleKickMember = async (member) => {
-    const confirmMessage = `Are you sure you want to kick ${member.user_email.split('@')[0]}?`;
-    if (!window.confirm(confirmMessage)) {
-      return;
-    }
-    const memberId = member.user_id;
+  const handleKickMember = async (memberId) => {
     try {
       const response = await fetch(`${config.API_URL}/api/leagues/kick_member/`, {
         method: 'POST',
@@ -101,10 +114,6 @@ const LeagueList = () => {
   };
 
   const handleLeaveLeague = async () => {
-    const confirmMessage = 'Are you sure you want to leave this league?';
-    if (!window.confirm(confirmMessage)) {
-      return
-    }
     try {
       const response = await fetch(`${config.API_URL}/api/leagues/leave_league/`, {
         method: 'POST',
@@ -141,55 +150,54 @@ const LeagueList = () => {
 
   return (
     <div className="league-list-container">
-      <div className="select-section">
-        <select value={selectedLeague.name} onChange={handleLeagueChange}>
-          <option value="" disabled>Select a league</option>
+      <div className="league-header">
+        <select className="styled-select" value={selectedLeague.name || ""} onChange={handleLeagueChange}>
+          <option value="" disabled>Select League</option>
           {leagues.map((league) => (
             <option key={league.name} value={league.name}>
               {league.name}
             </option>
           ))}
         </select>
-
-        {selectedLeague.name && (
-          <select value={selectedWeek} onChange={handleWeekChange}>
-            <option value="" disabled>Select a week</option>
-            {weekOptions.map((week) => (
+        <select className="styled-select" value={selectedWeek || ""} onChange={handleWeekChange}>
+          <option value="" disabled>Select Week</option>
+          {weekOptions.map((week) => (
               <option key={week} value={week}>
-                Week {week}
+                  Week {week}
               </option>
-            ))}
-          </select>
-        )}
-      </div>
-
-      {selectedLeague.name && (
-        <div className="league-header">
-          <h2>League: {selectedLeague.name}</h2>
-          <p>Members: {members.length}</p>
-          <p>Passcode: {selectedLeague.passcode}</p>
-          {selectedLeague.is_creator ? null : (
-            <button className="leave-button" onClick={handleLeaveLeague}>
+          ))}
+        </select>
+        
+        <div className="league-info">
+          {selectedLeague.name && <>
+            <p>Members: {members.length}</p>
+            <p>Passcode: {selectedLeague.passcode}</p>
+          </>}
+          {selectedLeague.name && !selectedLeague.is_creator ? (
+            <button className="leave-button" onClick={() => {
+              const confirmBox = window.confirm(`Do you really want to leave this league?`)
+              if (confirmBox === true) {
+                handleLeaveLeague();
+              }
+            }}>
               Leave
             </button>
-          )}
+          ) : null}
         </div>
-      )}
-
+      </div>
+  
       {selectedLeague.name && (
         <div className="table-section">
           <table>
-            {/* Table header */}
             <thead>
               <tr>
                 <th>User</th>
                 <th>W</th>
                 <th>L</th>
                 <th>Picks</th>
+                <th>Actions</th>
               </tr>
             </thead>
-
-            {/* Table body */}
             <tbody>
               {members.map((member) => (
                 <tr key={member.user_id}>
@@ -197,17 +205,27 @@ const LeagueList = () => {
                   <td>{member.wins}</td>
                   <td>{member.losses}</td>
                   <td>No week chosen</td>
-                  {selectedLeague.is_creator && user && member.user_id !== user.id && (
-                    <td>
-                      <button className="kick-button" onClick={() => handleKickMember(member)}>
+                  <td>
+                    {selectedLeague.is_creator && user && member.user_id !== user.id && (
+                      <button className="leave-button" onClick={() => {
+                        const confirmBox = window.confirm(`Do you really want to kick ${member.user_email.split('@')[0]}?`)
+                        if (confirmBox === true) {
+                          handleKickMember(member.user_id);
+                        }
+                      }}>
                         Kick
                       </button>
-                    </td>
-                  )}
+                    )}
+                  </td>
                 </tr>
               ))}
             </tbody>
           </table>
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={(page) => fetchLeagueMembers(selectedLeague.name, page)}
+          />
         </div>
       )}
     </div>

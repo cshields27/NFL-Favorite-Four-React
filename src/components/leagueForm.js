@@ -4,7 +4,7 @@ import { useAlert } from 'react-alert'
 import './leagueForm.css';
 import config from '../config'
 
-const LeagueForm = () => {
+const LeagueForm = ({ onJoinCreateLeague }) => {
   const alert = useAlert()
   const { user } = useAuth();
   const [formType, setFormType] = useState('join'); // Track the selected form type (join or create)
@@ -38,6 +38,7 @@ const LeagueForm = () => {
           const data = await response.json();
           console.log('Joined league', data);
           alert.show('League joined!');
+          onJoinCreateLeague();
         } 
         else {
           const errorData = await response.json();
@@ -57,6 +58,7 @@ const LeagueForm = () => {
           const data = await response.json();
           console.log('Created league', data);
           alert.show('League created!');
+          onJoinCreateLeague();
         } 
         else {
           const errorData = await response.json();
