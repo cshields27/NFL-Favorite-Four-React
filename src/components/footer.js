@@ -7,7 +7,7 @@ const Footer = () => {
     <footer className="footer-footer">
       <div className="footer-main">
       <Link to="/" className="footer-logo">
-          NFL Favorite Four
+          Favorite Four
       </Link>
         <a
           href="https://twitter.com/connorshieldss"
@@ -23,6 +23,9 @@ const Footer = () => {
         </a>
         <Link to="/about" className="footer-link button-clean button">
           About
+        </Link>
+        <Link to="/terms-of-service" className="footer-link button-clean button">
+          Terms of Service
         </Link>
       </div>
       <span className="footer-copyright">

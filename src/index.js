@@ -12,6 +12,7 @@ import Home from './views/home'
 import About from './views/about';
 import SubmitPicks from './views/submitpicks'
 import Leagues from './views/leagues'
+import Terms from './views/terms'
 
 const options = {
     timeout: 3000, // Duration in milliseconds (3 seconds in this case)
@@ -30,6 +31,7 @@ const App = () => {
         <Route component={Leagues} exact path="/leagues"/>
         <Route component={About} exact path="/about" />
         <Route component={SubmitPicks} exact path="/submit-picks"/>
+        <Route component={Terms} exact path="/terms-of-service"/>
       </div>
     </Router>
     </AlertProvider>

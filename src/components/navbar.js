@@ -22,7 +22,7 @@ const Navbar = () => {
   return (
     <nav className="navbar-container">
       <Link to="/" className="navbar-logo">
-        NFL Favorite Four
+        Football Favorite Four
       </Link>
       <div className="navbar-buttons">
       <Link to="/submit-picks" className="navbar-button"> Submit Picks </Link>

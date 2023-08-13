@@ -7,8 +7,8 @@ const Card = () => {
     <section className="card">
       <div className="card-image-container">
         <img
-          alt="image"
-          src="https://images.unsplash.com/photo-1528675025161-ea13b463cc02?ixid=M3w5MTMyMXwwfDF8c2VhcmNofDJ8fHN1cGVyJTIwYm93bHxlbnwwfHx8fDE2OTA4NTAxNTN8MA&ixlib=rb-4.0.3&h=500"
+          alt="Philadelphia Eagles Super Bowl Champions Parade"
+          src="/img/eaglesparade.png"
           className="card-image"
         />
       </div>
