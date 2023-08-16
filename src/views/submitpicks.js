@@ -3,7 +3,6 @@ import Navbar from '../components/navbar';
 import Footer from '../components/footer';
 import PickSummary from '../components/pickSummary';
 import { useAuth } from '../authContext';
-import useGoogleAuth from '../hooks/useGoogleAuth';
 import SubmitPicksForm from '../components/submitPicksForm';
 import config from '../config'
 import './submitpicks.css';
@@ -17,24 +16,46 @@ const SubmitPicks = () => {
   const fetchData = async () => {
     try {
       setUserPicks(null);
-      const matchupsResponse = await fetch(`${config.API_URL}/api/upcoming_week_matchups/`);
-      const matchupsData = await matchupsResponse.json();
-      setMatchups(matchupsData.matchups);
-      setCurrentWeek(matchupsData.week_number);
+
+      const cachedMatchups = sessionStorage.getItem('matchups');
+      if (cachedMatchups) {
+        console.log('got matchups from cache');
+        setMatchups(JSON.parse(cachedMatchups));
+        setCurrentWeek(sessionStorage.getItem('currentWeek'));
+      } 
+      else {
+        console.log('fetching matchups from API');
+        const matchupsResponse = await fetch(`${config.API_URL}/api/upcoming_week_matchups/`);
+        const matchupsData = await matchupsResponse.json();
+        setMatchups(matchupsData.matchups);
+        setCurrentWeek(matchupsData.week_number);
+        sessionStorage.setItem('matchups', JSON.stringify(matchupsData.matchups));
+        sessionStorage.setItem('currentWeek', matchupsData.week_number);
+      }
 
       if (user && isLoggedIn) {
-        const userPicksResponse = await fetch(`${config.API_URL}/api/user_picks_for_next_week/`, {
-          headers: {
-            Authorization: `Token ${user.token}`,
-          },
-        });
+        const cachedUserPicks = sessionStorage.getItem(`userPicks-${user.id}`);
+        if (cachedUserPicks) {
+          setUserPicks(JSON.parse(cachedUserPicks));
+          console.log('got picks from cache');
+        }
+        else {
+          console.log('retrieving user picks from API');
+          const userPicksResponse = await fetch(`${config.API_URL}/api/user_picks_for_next_week/`, {
+            headers: {
+              Authorization: `Token ${user.token}`,
+            },
+          });
 
-        if (userPicksResponse.ok) {
-          const userPicksData = await userPicksResponse.json();
-          setUserPicks(userPicksData);
+          if (userPicksResponse.ok) {
+            const userPicksData = await userPicksResponse.json();
+            setUserPicks(userPicksData);
+            sessionStorage.setItem(`userPicks-${user.id}`, JSON.stringify(userPicksData));
+          }
         }
       }
-    } catch (error) {
+    } 
+    catch (error) {
       console.error('Error fetching data:', error);
     }
   };
@@ -43,7 +64,7 @@ const SubmitPicks = () => {
     fetchData();
   }, [isLoggedIn, user]);
 
-  const handlePicksUpdate = (updatedPicks) => {
+  const handlePicksUpdate = () => {
     fetchData();
   };
 

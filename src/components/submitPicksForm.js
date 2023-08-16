@@ -21,21 +21,28 @@ const SubmitPicksForm = (props) => {
     under: null,
   });
 
-  useEffect(() => {
-    const warnUser = (event) => {
-      const message = 'You have unsaved changes! Are you sure you want to leave?';
-      const numNonNullOptions = Object.values(selectedOptions).filter(option => option !== null).length;
-      if (numNonNullOptions === 4 && mustSubmit){
-        event.returnValue = message;
-        return message;
-      }
-    };
-
+  const setupUnloadListener = () => {
     window.addEventListener('beforeunload', warnUser);
-
-    // Cleanup
-    return () => {
+  };
+  const removeUnloadListener = () => {
       window.removeEventListener('beforeunload', warnUser);
+  };
+  const warnUser = (event) => {
+      const message = 'You have unsaved changes! Are you sure you want to leave?';
+      event.returnValue = message;
+      return message;
+  };
+
+  useEffect(() => {
+    const numNonNullOptions = Object.values(selectedOptions).filter(option => option !== null).length;
+
+    if (numNonNullOptions === 4 && mustSubmit)
+        setupUnloadListener();
+    else
+        removeUnloadListener();
+
+    return () => {
+        removeUnloadListener();
     };
   }, [selectedOptions, mustSubmit]);
 
@@ -69,24 +76,27 @@ const SubmitPicksForm = (props) => {
       }
 
       // Send the selected options to the backend API
+      const picks = JSON.stringify({
+        favorite_pick: selectedOptions.favorite,
+        underdog_pick: selectedOptions.underdog,
+        over_pick: selectedOptions.over,
+        under_pick: selectedOptions.under,
+        week_number: props.currentWeek,
+      })
+      
       const response = await fetch(`${config.API_URL}/api/weekly_picks/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Token ${user.token}`, // Pass the user token as authorization header
         },
-        body: JSON.stringify({
-          favorite_pick: selectedOptions.favorite,
-          underdog_pick: selectedOptions.underdog,
-          over_pick: selectedOptions.over,
-          under_pick: selectedOptions.under,
-          week_number: props.currentWeek,
-        }),
+        body: picks,
       });
 
       if (response.ok) {
         // Picks submitted successfully
         console.log('Picks submitted successfully!');
+        sessionStorage.setItem(`userPicks-${user.id}`, picks);
         props.onPicksUpdate();
         alert.show(
           <div style={{ backgroundColor: '#4CAF50', color: 'white', padding: '10px', borderRadius: '4px' }}>
