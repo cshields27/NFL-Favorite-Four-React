@@ -10,12 +10,43 @@ const SubmitPicksForm = (props) => {
   const alert = useAlert()
   const { isLoggedIn, user } = useAuth();
   const { handleLogin } = useGoogleAuth();
+  const [hasAlertBeenShown, setHasAlertBeenShown] = useState(false);
+  const [manualChanges, setManualChanges] = useState(0);
+  const [mustSubmit, setMustSubmit] = useState(false);
+
   const [selectedOptions, setSelectedOptions] = useState({
     favorite: null,
     underdog: null,
     over: null,
     under: null,
   });
+
+  useEffect(() => {
+    const warnUser = (event) => {
+      const message = 'You have unsaved changes! Are you sure you want to leave?';
+      const numNonNullOptions = Object.values(selectedOptions).filter(option => option !== null).length;
+      if (numNonNullOptions === 4 && mustSubmit){
+        event.returnValue = message;
+        return message;
+      }
+    };
+
+    window.addEventListener('beforeunload', warnUser);
+
+    // Cleanup
+    return () => {
+      window.removeEventListener('beforeunload', warnUser);
+    };
+  }, [selectedOptions, mustSubmit]);
+
+  useEffect(() => {
+    const numNonNullOptions = Object.values(selectedOptions).filter(option => option !== null).length;
+
+    if (manualChanges > 0 && numNonNullOptions === 4 && !hasAlertBeenShown) {
+        alert.show("Press submit to lock in your picks!");
+        setHasAlertBeenShown(true);
+    }
+  }, [selectedOptions]);
 
   useEffect(() => {
     if (props.userPicks) {
@@ -61,6 +92,7 @@ const SubmitPicksForm = (props) => {
           <div style={{ backgroundColor: '#4CAF50', color: 'white', padding: '10px', borderRadius: '4px' }}>
             Success!
           </div>)
+        setMustSubmit(false);
       } else {
         // Error submitting picks
         const errorData = await response.json();
@@ -105,6 +137,18 @@ const SubmitPicksForm = (props) => {
         newSelectedOptions[optionType] = matchupId;
       }
 
+      // disallow favorite and underdog in same matchup, same with over/under
+      if (optionType == 'favorite' && prevSelectedOptions['underdog'] == matchupId)
+        newSelectedOptions['underdog'] = null
+      if (optionType == 'underdog' && prevSelectedOptions['favorite'] == matchupId)
+        newSelectedOptions['favorite'] = null
+      if (optionType == 'over' && prevSelectedOptions['under'] == matchupId)
+        newSelectedOptions['under'] = null
+      if (optionType == 'under' && prevSelectedOptions['over'] == matchupId)
+        newSelectedOptions['over'] = null
+
+      setManualChanges(1);
+      setMustSubmit(true);
       return newSelectedOptions;
     });
   };
@@ -125,6 +169,15 @@ const SubmitPicksForm = (props) => {
 
   return (
     <div className="submit-picks-form">
+      { isLoggedIn ?
+        (<button className="submit-button" disabled={!isFormValid()[0]} onClick={handleSubmitPicks}>
+          {isFormValid()[0] ? 'Submit Picks' : isFormValid()[1]}
+        </button>
+        ) : 
+        (<button onClick={handleLogin} className="login-button">
+            Login with Google to Submit Picks
+        </button>)
+      }
       <div className="column-labels">
         <div className="label">Favorite</div>
         <div className="label">Spread</div>
@@ -148,18 +201,14 @@ const SubmitPicksForm = (props) => {
         ))}
       </div>
       { isLoggedIn ?
-      (<button
-        className="submit-button"
-        disabled={!isFormValid()[0]}
-        onClick={handleSubmitPicks}
-      >
-        {isFormValid()[0] ? 'Submit Picks' : isFormValid()[1]}
-      </button>
-      ) : 
-      (<button onClick={handleLogin} className="submit-picks-button">
-          Login with Google to Submit Picks
-       </button>)
-       }
+        (<button className="submit-button" disabled={!isFormValid()[0]} onClick={handleSubmitPicks}>
+          {isFormValid()[0] ? 'Submit Picks' : isFormValid()[1]}
+        </button>
+        ) : 
+        (<button onClick={handleLogin} className="login-button">
+            Login with Google to Submit Picks
+        </button>)
+      }
     </div>
   );
 };

@@ -118,3 +118,25 @@
   background-color: #b3b3b3;
   cursor: not-allowed;
 }
+
+/* Login button style */
+.login-button {
+  padding: 0.5rem 1rem;
+  background-color: rgb(255, 207, 119);
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--dl-color-gray-black);
+  cursor: pointer;
+  box-shadow: 5px 6px 0px 0px #000000;
+  transition: 0.3s;
+}
+
+.login-button:hover {
+  opacity: 0.8;
+}
+
+.login-button {
+  margin-bottom: 20px;
+}
