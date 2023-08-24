@@ -12,6 +12,7 @@ const SubmitPicks = () => {
   const [matchups, setMatchups] = useState([]);
   const [currentWeek, setCurrentWeek] = useState(null);
   const [userPicks, setUserPicks] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const fetchData = async () => {
     try {
@@ -25,10 +26,12 @@ const SubmitPicks = () => {
       } 
       else {
         console.log('fetching matchups from API');
+        setIsLoading(true);
         const matchupsResponse = await fetch(`${config.API_URL}/api/upcoming_week_matchups/`);
         const matchupsData = await matchupsResponse.json();
         setMatchups(matchupsData.matchups);
         setCurrentWeek(matchupsData.week_number);
+        setIsLoading(false);
         sessionStorage.setItem('matchups', JSON.stringify(matchupsData.matchups));
         sessionStorage.setItem('currentWeek', matchupsData.week_number);
       }
@@ -68,6 +71,13 @@ const SubmitPicks = () => {
     fetchData();
   };
 
+  const Spinner = () => (
+    <div className="spinner-container">
+      <div className="spinner"></div>
+      <p>Loading matchup data...</p>
+    </div>
+  );
+
   return (
     <div className='home-container'>
       <Navbar></Navbar>
@@ -81,7 +91,14 @@ const SubmitPicks = () => {
             clicking on team logos as well as "over" and "under". <br></br>
             Login, submit, and come back later to see how your picks fared. Share your picks with friends and start a league!
           </p>
-          <SubmitPicksForm matchups={matchups} currentWeek={currentWeek} userPicks={userPicks} onPicksUpdate={handlePicksUpdate}/>
+          {isLoading ? (<Spinner /> ) : (
+            <SubmitPicksForm 
+              matchups={matchups} 
+              currentWeek={currentWeek} 
+              userPicks={userPicks} 
+              onPicksUpdate={handlePicksUpdate}
+            />
+          )}       
         </div>
       </div>
       <Footer></Footer>
