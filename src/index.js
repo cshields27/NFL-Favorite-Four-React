@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import ReactDOM from 'react-dom'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Route, useLocation } from 'react-router-dom'
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { AuthProvider } from './authContext';
 import { transitions, positions, Provider as AlertProvider } from 'react-alert'
@@ -14,6 +14,16 @@ import SubmitPicks from './views/submitpicks'
 import Leagues from './views/leagues'
 import Terms from './views/terms'
 
+function ScrollToTop() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  return null;
+}
+
 const options = {
     timeout: 3000, // Duration in milliseconds (3 seconds in this case)
     position: positions.MIDDLE,
@@ -26,6 +36,7 @@ const App = () => {
     <AuthProvider>
     <AlertProvider template={AlertTemplate} {...options}>
     <Router>
+      <ScrollToTop />
       <div>
         <Route component={Home} exact path="/" />
         <Route component={Leagues} exact path="/leagues"/>

@@ -68,3 +68,13 @@
 .league-form-container {
   margin-bottom: 20px;
 }
+
+/* This targets <option> tags within <select> tags */
+select option {
+  color: black;
+}
+
+/* This targets <select> tags */
+select {
+  color: black;
+}

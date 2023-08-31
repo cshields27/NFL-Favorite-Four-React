@@ -10,7 +10,7 @@ const Footer = () => {
           Favorite Four
       </Link>
         <a
-          href="https://twitter.com/connorshieldss"
+          href="https://twitter.com/FavoriteFour"
           target="_blank"
           rel="noreferrer noopener"
           className="footer-twitter social button"

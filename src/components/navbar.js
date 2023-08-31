@@ -21,16 +21,19 @@ const Navbar = () => {
 
   return (
     <nav className="navbar-container">
-      <Link to="/" className="navbar-logo">
-        Football Favorite Four
-      </Link>
+      <div className="navbar-logo-container">
+        <img alt="Favorite Four logo" src="/img/favefourlogo.png" className="logo"/>
+        <Link to="/" className="navbar-logo">
+          Football Favorite Four
+        </Link>
+      </div>
       <div className="navbar-buttons">
       <Link to="/submit-picks" className="navbar-button"> Submit Picks </Link>
         <Link to="/leagues" className="navbar-button"> Leagues </Link>
         <Link to="/about" className="navbar-button"> About </Link>
         <div className="navbar-icon">
           <a
-            href="https://twitter.com/connorshieldss"
+            href="https://twitter.com/FavoriteFour"
             target="_blank"
             rel="noreferrer noopener"
             className="footer-twitter social button"

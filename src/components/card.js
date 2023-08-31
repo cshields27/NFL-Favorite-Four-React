@@ -17,16 +17,16 @@ const Card = () => {
         <p className="card-description">
           Don't let your sharp picks get diluted in a pool where you're forced to pick every spread, losing your edge to a random coworker who lucked out on the Titans - Jags result. By only taking 4 picks a week, you have the flexibility to show everyone that you know ball.
         </p>
-        <button className="card-learn button">
+        <div className="card-learn">
           <Link to="/submit-picks" className="card-text">
               Make Your Picks
+              <img
+                alt="arrow"
+                src="/Icons/arrow-2.svg"
+                className="card-image-arrow"
+              />
           </Link>
-          <img
-            alt="arrow"
-            src="/Icons/arrow-2.svg"
-            className="card-image-arrow"
-          />
-        </button>
+        </div>
       </div>
     </section>
   );

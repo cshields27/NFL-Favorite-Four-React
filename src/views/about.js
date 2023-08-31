@@ -66,7 +66,7 @@ const About = () => {
             to reach out at:
           </p>
           <p>Email: connorjshields@alumni.nd.edu</p>
-          <p>Twitter: connorshieldss</p>
+          <p>Twitter: @FavoriteFour, @connorshieldss</p>
         </div>
       </div>
       <Footer></Footer>

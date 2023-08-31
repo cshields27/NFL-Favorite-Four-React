@@ -9,6 +9,17 @@
   width: 80%;
 }
 
+.navbar-logo-container {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  width: 50px;
+  height: auto;
+  margin-right: 10px; /* optional, adds some space between the logo and the text */
+}
+
 .navbar-logo {
   font-size: 1.5rem;
   font-weight: 600;
@@ -65,6 +76,21 @@
   .navbar-container {
     flex-direction: column;
     padding: 1rem 1rem; /* Adjust padding for smaller screens */
+  }
+  
+  .navbar-logo-container {
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .logo {
+    width: 30px; /* smaller logo */
+    margin-right: 5px; /* less spacing */
+  }
+
+  .navbar-logo {
+    font-size: 1.2rem; /* smaller text */
   }
 
   .navbar-buttons {
