@@ -3,8 +3,8 @@ import { getTeamLogoUrl } from './matchupRow'; // Import the function to get the
 import './pickSummary.css'
 
 const getTeamNamesFromPicks = (userPicks, matchups) => {
-  const getFavoriteTeam = (matchup) => (matchup.spread < 0 ? matchup.home_team : matchup.away_team);
-  const getUnderdogTeam = (matchup) => (matchup.spread < 0 ? matchup.away_team : matchup.home_team);
+  const getFavoriteTeam = (matchup) => (matchup.spread <= 0 ? matchup.home_team : matchup.away_team);
+  const getUnderdogTeam = (matchup) => (matchup.spread <= 0 ? matchup.away_team : matchup.home_team);
 
   const favoriteMatchup = matchups.find((matchup) => matchup.id === userPicks.favorite_pick);
   const underdogMatchup = matchups.find((matchup) => matchup.id === userPicks.underdog_pick);

@@ -97,8 +97,8 @@ table {
 }
 
 th, td {
-  padding: 10px;
-  text-align: left;
+  padding: 5px;
+  text-align: center;
 }
 
 th {
@@ -198,4 +198,87 @@ option[disabled] {
 
 ::-webkit-dialog-button:hover {
   background-color: #0056b3;
+}
+
+/* Add these styles to your existing leagueList.css file */
+
+/* Container for the 4 pick groups */
+.picks-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+}
+
+/* Styling for favorite and underdog picks */
+.pick-favorite, .pick-underdog {
+  width: 50px; /* Adjust to make the logo fit well */
+  height: auto;
+}
+
+/* Grouping for over picks */
+.pick-over {
+  display: flex;
+  align-items: center;
+}
+
+/* Grouping for under picks */
+.pick-under {
+  display: flex;
+  align-items: center;
+}
+
+/* Styling for over and under picks */
+.pick-over-home, .pick-over-away, .pick-under-home, .pick-under-away {
+  width: 30px; /* Making them smaller than favorite and underdog */
+  height: auto;
+}
+
+/* Explicitly set the width of W and L columns */
+th.wl-column, td.wl-column {
+  width: 40px;
+}
+
+/* Set minimum width for pick summary columns */
+th.pick-summary, td.pick-summary {
+  min-width: 100px;
+}
+
+.won {
+  background-color: #80d7a1cb;
+}
+
+.lost {
+  background-color: rgb(224, 82, 82);
+}
+
+@media (max-width: 768px) { 
+  .actions-column {
+    display: none;
+  }
+
+  .table-section table {
+    width: 100%;
+    table-layout: fixed;
+    overflow-x: auto;
+  }
+
+  .table-section th, .table-section td {
+    word-wrap: break-word;
+  }
+
+  /* Adjust size of favorite and underdog picks */
+  .pick-favorite, .pick-underdog {
+    width: 30px;
+  }
+
+  /* Adjust size of over and under picks */
+  .pick-over-home, .pick-over-away, .pick-under-home, .pick-under-away {
+    width: 20px;
+  }
+
+  /* Stack over and under logos on top of each other */
+  .pick-over, .pick-under {
+    flex-direction: column;
+  }
 }

@@ -28,6 +28,32 @@ const About = () => {
         <div className="about-card">
           <h2>FAQ</h2>
           <div className="faq-entry">
+            <h3>Are the spreads and over/unders locked in or do they change over the week?</h3>
+            <p>
+              The game lines will be updated frequently and will be finalized Thursday afternoons.
+              Users can always update their picks as the lines change and up to game time - note that picking a favorite or underdog 
+              is actually picking the favorite/underdog for the <i>matchup</i>, so a line change that results in the
+              favorite switching will switch which team you picked. This means the game lines aren't truly locked in until Thursday.
+              <br></br><br></br>
+              Occasionally, there may be small differences between the final lines on our site and the Vegas closing lines, especially 
+              in the case of last-minute roster changes. In such cases, we use the site’s finalized lines for fairness. In games that
+              are pick 'ems (PK), the home team is considered the favorite.
+            </p>
+          </div>
+          <div className="faq-entry">
+            <h3>When do picks need to be submitted?</h3>
+            <p>
+              Picks for each game can be submitted up to the start time - picks for unstarted games can be changed at any time.
+            </p>
+          </div>
+          <div className="faq-entry">
+            <h3>When are picks graded?</h3>
+            <p>
+              Users' win-loss records will be updated at the conclusion of each week's games. Once a week starts, league members'
+              picks can be viewed by selecting the week in the Leagues tab.
+            </p>
+          </div>
+          <div className="faq-entry">
             <h3>How does a spread work?</h3>
             <p>
               A spread is a type of selection where oddsmakers set a margin of
@@ -49,13 +75,6 @@ const About = () => {
               is 44.5, scores such as 41-33 (74 total points) and 38-7 (45 total points), would
               result in a winning result for the "over". Scores such as 13-9 (22 points) would of
               course hit the under! Your goal is to pick a correct over and a correct under every week.
-            </p>
-          </div>
-          <div className="faq-entry">
-            <h3>When are picks due?</h3>
-            <p>
-              Picks for each game can be submitted up to the start time; picks for unstarted games can be changed at any time.
-              Picks will be graded at the conclusion of all of the week's games.
             </p>
           </div>
         </div>

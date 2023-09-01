@@ -9,7 +9,7 @@ export const getTeamLogoUrl = (teamName) => {
 };
 
 const MatchupRow = ({ matchupId, homeTeam, awayTeam, spread, overUnder, onSelect, selectedOptions, hasStarted }) => {
-  const isHomeTeamFavorite = spread < 0;
+  const isHomeTeamFavorite = spread <= 0;
   const isHomeTeamSelected =
     (selectedOptions.favorite === matchupId && isHomeTeamFavorite) ||
     (selectedOptions.underdog === matchupId && !isHomeTeamFavorite);
@@ -20,7 +20,7 @@ const MatchupRow = ({ matchupId, homeTeam, awayTeam, spread, overUnder, onSelect
   
   const renderSpread = () => {
     const spreadToFavorite = isHomeTeamFavorite ? spread : -spread;
-    return spreadToFavorite < 0 ? spreadToFavorite : `+${spreadToFavorite}`;
+    return spreadToFavorite <= 0 ? (spreadToFavorite == 0 ? 'PK' : spreadToFavorite) : `+${spreadToFavorite}`;
   };
 
   return (

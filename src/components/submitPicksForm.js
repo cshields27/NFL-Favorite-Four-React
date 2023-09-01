@@ -119,7 +119,7 @@ const SubmitPicksForm = (props) => {
     if (matchup) {
       const startTime = new Date(matchup.start_time); // Convert start_time string to a Date object
       const currentTime = new Date();
-      return startTime <= currentTime; // Check if the matchup has started
+      return startTime <= currentTime || matchup.is_scored; // Check if the matchup has started
     }
     return false;
   };
