@@ -211,40 +211,65 @@ const LeagueList = ({ refresh }) => {
     const overStatus = matchupData.overs.includes(member.over_pick) ? 'won' :  (matchupData.unders.includes(member.over_pick) ? 'lost' : (matchupData.not_scored.includes(member.over_pick) ? 'not-scored' : 'pushed'));
     const underStatus = matchupData.unders.includes(member.under_pick) ? 'won' :  (matchupData.overs.includes(member.under_pick) ? 'lost' : (matchupData.not_scored.includes(member.under_pick) ? 'not-scored' : 'pushed'));
 
+    const currentTime = new Date();
+    const favoriteStarted = new Date(favorite_matchup.start_time) <= currentTime;
+    const underdogStarted = new Date(underdog_matchup.start_time) <= currentTime;
+    const overStarted = new Date(over_matchup.start_time) <= currentTime;
+    const underStarted = new Date(under_matchup.start_time) <= currentTime;
+
     return (
       <>
         <div className="picks-container">
           <img className={`pick-favorite ${favoriteStatus}`}
-            src={favorite_logo_url} 
-            alt={`${favorite_team} logo`}
+            src={favoriteStarted ? favorite_logo_url : 'img/lock.png'} 
+            alt={favoriteStarted ? `${favorite_team} logo` : 'Game not started'}
           />
           <img className={`pick-underdog ${underdogStatus}`}
-            src={underdog_logo_url} 
-            alt={`${underdog_team} logo`} 
+            src={underdogStarted ? underdog_logo_url : 'img/lock.png'} 
+            alt={underdogStarted ? `${underdog_team} logo` : 'Game not started'}
           />
           <div className={`pick-over ${overStatus}`}>
-            <img className="pick-over-home" 
-              src={over_home_logo_url} 
-              alt={`${over_matchup.home_team} logo`} 
-            />
-            <img className="pick-over-away" 
-              src={over_away_logo_url} 
-              alt={`${over_matchup.away_team} logo`} 
-            />
+            { overStarted ? (
+              <>
+                <img className="pick-over-home" 
+                  src={over_home_logo_url} 
+                  alt={`${over_matchup.home_team} logo`} 
+                />
+                <img className="pick-over-away" 
+                  src={over_away_logo_url} 
+                  alt={`${over_matchup.away_team} logo`} 
+                />
+              </>
+            ) : (
+              <img className="pick-lock" 
+                src={'img/lock.png'} 
+                alt={'Game not started'} 
+              />
+            )}
           </div>
           <div className={`pick-under ${underStatus}`}>
-            <img className="pick-under-home" 
-              src={under_home_logo_url} 
-              alt={`${under_matchup.home_team} logo`} 
-            />
-            <img className="pick-under-away" 
-              src={under_away_logo_url} 
-              alt={`${under_matchup.away_team} logo`} 
-            />
+            { underStarted ? (
+              <>
+                <img className="pick-under-home" 
+                  src={under_home_logo_url} 
+                  alt={`${under_matchup.home_team} logo`} 
+                />
+                <img className="pick-under-away" 
+                  src={under_away_logo_url} 
+                  alt={`${under_matchup.away_team} logo`} 
+                />
+              </>
+            ) : (
+              <img className="pick-lock" 
+                src={'img/lock.png'} 
+                alt={'Game not started'} 
+              />
+            )}
           </div>
         </div>
       </>
     );
+    
     
   };
 

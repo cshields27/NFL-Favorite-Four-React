@@ -211,7 +211,7 @@ option[disabled] {
 }
 
 /* Styling for favorite and underdog picks */
-.pick-favorite, .pick-underdog {
+.pick-favorite, .pick-underdog, .pick-lock {
   width: 50px; /* Adjust to make the logo fit well */
   height: auto;
 }
@@ -252,6 +252,10 @@ th.pick-summary, td.pick-summary {
   background-color: rgb(224, 82, 82);
 }
 
+.pushed {
+  background-color: #6e6e6e;
+}
+
 @media (max-width: 768px) { 
   .actions-column {
     display: none;
@@ -268,7 +272,7 @@ th.pick-summary, td.pick-summary {
   }
 
   /* Adjust size of favorite and underdog picks */
-  .pick-favorite, .pick-underdog {
+  .pick-favorite, .pick-underdog, .pick-lock {
     width: 30px;
   }
 
