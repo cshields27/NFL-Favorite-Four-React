@@ -32,7 +32,7 @@ const MatchupRow = ({ matchupId, homeTeam, awayTeam, spread, overUnder, onSelect
             onClick={() => onSelect('favorite')}
           >
             <img src={getTeamLogoUrl(homeTeam)} alt={homeTeam} className="team-logo" />
-            <p className="team-name">{homeTeam}</p>
+            <p className="team-name">{homeTeam.split(' ').splice(-1)[0]} (H)</p>
           </div>
           <div className="spread">{renderSpread()}</div>
           <div
@@ -40,7 +40,7 @@ const MatchupRow = ({ matchupId, homeTeam, awayTeam, spread, overUnder, onSelect
             onClick={() => onSelect('underdog')}
           >
             <img src={getTeamLogoUrl(awayTeam)} alt={awayTeam} className="team-logo" />
-            <p className="team-name">{awayTeam}</p>
+            <p className="team-name">{awayTeam.split(' ').splice(-1)[0]} (A)</p>
           </div>
         </>
       ) : (
@@ -50,7 +50,7 @@ const MatchupRow = ({ matchupId, homeTeam, awayTeam, spread, overUnder, onSelect
             onClick={() => onSelect('favorite')}
           >
             <img src={getTeamLogoUrl(awayTeam)} alt={awayTeam} className="team-logo" />
-            <p className="team-name">{awayTeam}</p>
+            <p className="team-name">{awayTeam.split(' ').splice(-1)[0]} (A)</p>
           </div>
           <div className="spread">{renderSpread()}</div>
           <div
@@ -58,7 +58,7 @@ const MatchupRow = ({ matchupId, homeTeam, awayTeam, spread, overUnder, onSelect
             onClick={() => onSelect('underdog')}
           >
             <img src={getTeamLogoUrl(homeTeam)} alt={homeTeam} className="team-logo" />
-            <p className="team-name">{homeTeam}</p>
+            <p className="team-name">{homeTeam.split(' ').splice(-1)[0]} (H)</p>
           </div>
         </>
       )}
