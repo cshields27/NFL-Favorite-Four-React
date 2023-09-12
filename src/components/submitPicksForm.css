@@ -8,7 +8,7 @@
 
 .column-labels {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1.5fr;
   gap: 10px;
   margin-bottom: 10px;
 }
@@ -21,7 +21,7 @@
 /* Styling for the matchup row */
 .matchup-row {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1.5fr;
   gap: 10px;
   align-items: center;
   padding: 10px;
