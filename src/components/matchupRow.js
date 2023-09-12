@@ -67,16 +67,15 @@ const MatchupRow = ({ matchupId, homeTeam, awayTeam, spread, overUnder, onSelect
           className={`over ${selectedOptions.over === matchupId ? 'selected' : ''}`}
           onClick={() => onSelect('over')}
         >
-          Over
+          Over {overUnder}
         </div>
         <div
           className={`under ${selectedOptions.under === matchupId ? 'selected' : ''}`}
           onClick={() => onSelect('under')}
         >
-          Under
+          Under {overUnder}
         </div>
       </div>
-      <div> {overUnder}</div>
       {/* Add any other matchup row elements as needed */}
     </div>
   );

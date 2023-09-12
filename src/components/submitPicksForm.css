@@ -1,12 +1,6 @@
 /* styles.css */
 
 /* General styles */
-.submit-picks-form {
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 20px;
-}
-
 .submit-picks-heading {
   font-size: 24px;
   font-weight: bold;
@@ -14,7 +8,7 @@
 
 .column-labels {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: 1fr 1fr 1fr 1fr;
   gap: 10px;
   margin-bottom: 10px;
 }
@@ -27,7 +21,7 @@
 /* Styling for the matchup row */
 .matchup-row {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
   gap: 10px;
   align-items: center;
   padding: 10px;

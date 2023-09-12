@@ -192,7 +192,6 @@ const SubmitPicksForm = (props) => {
         <div className="label">Favorite</div>
         <div className="label">Spread</div>
         <div className="label">Underdog</div>
-        <div className="label">Over/Under</div>
         <div className="label">Total</div>
       </div>
       <div className="matchup-rows">

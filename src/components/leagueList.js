@@ -96,7 +96,7 @@ const LeagueList = ({ refresh }) => {
       const data = await response.json();
       setMembers(data.results);
       setCurrentPage(page);
-      const pageSize = 20; // HAS to be in line with backend - TODO fix this and add custom pagination
+      const pageSize = 30; // HAS to be in line with backend - TODO fix this and add custom pagination
       setTotalPages(Math.ceil(data.count / pageSize));
     } catch (error) {
       console.error('Error fetching league members:', error);
