@@ -19,26 +19,24 @@
   flex-direction: column;
   align-items: center;
   justify-content: center; /* Center content vertically */
+  margin-inline: 7px;
 }
 
 .pick-summary-team .team-logo {
   width: 75px; /* Increase the width and height */
   height: 75px;
   border-radius: 50%;
-  margin-right: 10px;
 }
 
 .pick-summary-team .team-logo-over-under {
   width: 40px; /* Reduce the width and height */
   height: 40px;
   border-radius: 50%;
-  margin-right: 10px;
 }
 
 /* Pick Summary label */
 .pick-summary-label {
   font-weight: bold;
-  margin-right: 1rem;
   color: rgb(255, 207, 119); /* Use the same color as the submit-picks-button */
 }
 
@@ -53,7 +51,7 @@
   color: #FFF;
 }
 
-p {
+.game-summary {
   color: #FFF;
   text-align: center;
   margin-top: 5px;
