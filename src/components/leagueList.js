@@ -174,6 +174,7 @@ const LeagueList = ({ refresh }) => {
 
   const handleWeekChange = (event) => {
     const selectedWeekNumber = event.target.value;
+    setMembers([]);
     setSelectedWeek(selectedWeekNumber);
   };
 
