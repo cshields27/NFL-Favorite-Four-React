@@ -22,8 +22,8 @@
 }
 
 .pick-summary-team .team-logo {
-  width: 70px; /* Increase the width and height */
-  height: 70px;
+  width: 75px; /* Increase the width and height */
+  height: 75px;
   border-radius: 50%;
   margin-right: 10px;
 }
@@ -51,4 +51,11 @@
 
 .pick-summary-text {
   color: #FFF;
+}
+
+p {
+  color: #FFF;
+  text-align: center;
+  margin-top: 5px;
+  font-size: 14px;
 }

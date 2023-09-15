@@ -25,6 +25,10 @@ const getTeamNamesFromPicks = (userPicks, matchups) => {
     overAwayTeam,
     underHomeTeam,
     underAwayTeam,
+    favoriteMatchup,
+    underdogMatchup,
+    overMatchup,
+    underMatchup,
   };
 };
 
@@ -36,6 +40,10 @@ const PickSummary = ({ userPicks, matchups, currentWeek}) => {
     overAwayTeam,
     underHomeTeam,
     underAwayTeam,
+    favoriteMatchup,
+    underdogMatchup,
+    overMatchup,
+    underMatchup,
   } = getTeamNamesFromPicks(userPicks, matchups);
 
   return (
@@ -46,12 +54,14 @@ const PickSummary = ({ userPicks, matchups, currentWeek}) => {
           <div className="pick-summary-label">Favorite</div>
           <div className="pick-summary-team">
             <img src={getTeamLogoUrl(favoriteTeam)} alt={favoriteTeam} className="team-logo" />
+            <p>-{Math.abs(favoriteMatchup.spread)}</p>
           </div>
         </div>
         <div className="pick-summary-item">
           <div className="pick-summary-label">Underdog</div>
           <div className="pick-summary-team">
             <img src={getTeamLogoUrl(underdogTeam)} alt={underdogTeam} className="team-logo" />
+            <p>+{Math.abs(underdogMatchup.spread)}</p>
           </div>
         </div>
         <div className="pick-summary-item">
@@ -59,6 +69,7 @@ const PickSummary = ({ userPicks, matchups, currentWeek}) => {
           <div className="pick-summary-team">
             <img src={getTeamLogoUrl(overHomeTeam)} alt={overHomeTeam} className="team-logo-over-under" />
             <img src={getTeamLogoUrl(overAwayTeam)} alt={overAwayTeam} className="team-logo-over-under" />
+            <p>{overMatchup.over_under}</p>
           </div>
         </div>
         <div className="pick-summary-item">
@@ -66,6 +77,7 @@ const PickSummary = ({ userPicks, matchups, currentWeek}) => {
           <div className="pick-summary-team">
             <img src={getTeamLogoUrl(underHomeTeam)} alt={underHomeTeam} className="team-logo-over-under" />
             <img src={getTeamLogoUrl(underAwayTeam)} alt={underAwayTeam} className="team-logo-over-under" />
+            <p>{underMatchup.over_under}</p>
           </div>
         </div>
       </div>
