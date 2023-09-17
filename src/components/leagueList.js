@@ -230,42 +230,28 @@ const LeagueList = ({ refresh }) => {
             alt={underdogStarted ? `${underdog_team} logo` : 'Game not started'}
           />
           <div className={`pick-over ${overStatus}`}>
-            { overStarted ? (
-              <>
-                <img className="pick-over-home" 
-                  src={over_home_logo_url} 
-                  alt={`${over_matchup.home_team} logo`} 
-                />
-                <img className="pick-over-away" 
-                  src={over_away_logo_url} 
-                  alt={`${over_matchup.away_team} logo`} 
-                />
-              </>
-            ) : (
-              <img className="pick-lock" 
-                src={'img/lock.png'} 
-                alt={'Game not started'} 
+            <>
+              <img className="pick-over-home" 
+                src={overStarted ? over_home_logo_url : 'img/lock.png'} 
+                alt={overStarted ? `${over_matchup.home_team} logo` : 'Game not started'} 
               />
-            )}
+              <img className="pick-over-away" 
+                src={overStarted ? over_away_logo_url : 'img/lock.png'} 
+                alt={overStarted ? `${over_matchup.away_team} logo` : 'Game not started'} 
+              />
+            </>
           </div>
           <div className={`pick-under ${underStatus}`}>
-            { underStarted ? (
-              <>
-                <img className="pick-under-home" 
-                  src={under_home_logo_url} 
-                  alt={`${under_matchup.home_team} logo`} 
-                />
-                <img className="pick-under-away" 
-                  src={under_away_logo_url} 
-                  alt={`${under_matchup.away_team} logo`} 
-                />
-              </>
-            ) : (
-              <img className="pick-lock" 
-                src={'img/lock.png'} 
-                alt={'Game not started'} 
+            <>
+              <img className="pick-under-home" 
+                src={underStarted ? under_home_logo_url : 'img/lock.png'} 
+                alt={underStarted ? `${under_matchup.home_team} logo` : 'Game not started'} 
               />
-            )}
+              <img className="pick-under-away" 
+                src={underStarted ? under_away_logo_url : 'img/lock.png'} 
+                alt={underStarted ? `${under_matchup.away_team} logo` : 'Game not started'} 
+              />
+            </>
           </div>
         </div>
       </>
