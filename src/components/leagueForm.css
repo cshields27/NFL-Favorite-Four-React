@@ -8,6 +8,7 @@
   background-color: #f7f7f7;
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  overflow: auto;
 }
 
 /* Form heading */
@@ -22,7 +23,7 @@
 .league-form-container .form-row {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 20px;  /* adjust as needed */
   margin-bottom: 15px;
 }
 
@@ -34,7 +35,8 @@
 /* Input fields */
 .league-form-container input,
 .league-form-container select {
-  flex: 1;
+  flex-grow: 1;
+  min-width: 100px;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -77,4 +79,10 @@ select option {
 /* This targets <select> tags */
 select {
   color: black;
+}
+
+@media screen and (max-width: 768px) {
+  .league-form-container {
+    max-width: 90%;
+  }
 }

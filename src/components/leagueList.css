@@ -42,12 +42,23 @@
 }
 
 .styled-select {
-  background: none;
-  border: none;
+  border: 1px solid #ccc; /* subtle border */
   font-size: 1.5em;
   font-weight: bold;
   outline: none;
   cursor: pointer;
+  padding: 10px; /* added padding */
+  position: relative; /* added for absolute positioning of arrow */
+}
+
+/* Arrow Icon */
+.styled-select::after {
+  content: '▼';  /* down arrow */
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;  /* ignore clicks and touches */
 }
 
 .styled-select:focus {

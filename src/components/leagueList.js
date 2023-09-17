@@ -42,12 +42,15 @@ const LeagueList = ({ refresh }) => {
       if (selectedWeek) {
         fetchMatchupData(selectedWeek);
       }
-    }, [selectedWeek]);
+    }, [user, selectedWeek]);
 
   const fetchWeekList = async () => {
     try {
       const response = await fetch(`${config.API_URL}/api/get_past_weeks/`);
       const data = await response.json();
+      if (data.length > 0) {
+        setSelectedWeek(data[0]); // Most recent week
+      }
       setWeekOptions(data);
     } catch (error) {
       console.error('Error fetching week list:', error);
@@ -71,6 +74,10 @@ const LeagueList = ({ refresh }) => {
       });
       const data = await response.json();
       setLeagues(Array.isArray(data) ? data : []);
+
+      if (data.length > 0) {
+        setSelectedLeague(data[0]); // Automatically select the first league if it exists
+      }
     } catch (error) {
       console.error('Error fetching league list:', error);
     }
