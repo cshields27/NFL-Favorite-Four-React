@@ -99,6 +99,23 @@
   transform: scale(1.05);
 }
 
+.download-button {
+  background-color: #00b345;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 4px 8px; /* Reduced padding */
+  font-size: 14px; /* Smaller font size */
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+  margin-top: 4px; /* Keep some space above the button */
+}
+
+.download-button:hover {
+  background-color: #007e35;
+  transform: scale(1.05);
+}
+
 table {
   width: 100%;
   border-collapse: collapse;
@@ -269,6 +286,10 @@ th.pick-summary, td.pick-summary {
 
 @media (max-width: 768px) { 
   .actions-column {
+    display: none;
+  }
+
+  .download-button {
     display: none;
   }
 

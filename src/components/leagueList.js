@@ -185,34 +185,77 @@ const LeagueList = ({ refresh }) => {
     setSelectedWeek(selectedWeekNumber);
   };
 
-  const renderMemberInfo = (member) => {
-    if (!selectedWeek) {
-      return "No week chosen";
+  const downloadCSV = (leagueName, weekNum, members) => {
+    const csvArray = [
+      'user_email,wins,losses,favorite_team,favorite_spread,favorite_result,underdog_team,underdog_spread,underdog_result,over_home_team,over_over_under,over_result,under_home_team,under_over_under,under_result'
+    ];
+  
+    members.forEach((member) => {
+      const memberInfo = extractMemberInfo(member);
+      if (memberInfo) {
+        const [favorite_matchup, underdog_matchup, over_matchup, under_matchup, favoriteStatus, underdogStatus, overStatus, underStatus, favoriteStarted, underdogStarted, overStarted, underStarted] = memberInfo;
+        const row = [
+          member.user_email,
+          member.wins,
+          member.losses,
+          favorite_matchup.spread <= 0 ? favorite_matchup.home_team : favorite_matchup.away_team,
+          favorite_matchup.spread,
+          favoriteStatus,
+          underdog_matchup.spread <= 0 ? underdog_matchup.away_team : underdog_matchup.home_team,
+          underdog_matchup.spread,
+          underdogStatus,
+          over_matchup.home_team,
+          over_matchup.over_under,
+          overStatus,
+          under_matchup.home_team,
+          under_matchup.over_under,
+          underStatus 
+        ];
+          csvArray.push(row.join(','));
+      }
+    });
+
+    const csvString = csvArray.join('\n').replace(/\b(undefined|null)\b/g, '');
+  
+    const blob = new Blob([csvString], { type: 'text/csv;charset=utf-8;' });
+  
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.setAttribute('href', url);
+    link.setAttribute('download', `favefour_${leagueName}_week${weekNum}.csv`);
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+  
+  const allMatchupsStarted = () => {
+    if (!matchupData || !matchupData.matchup_details) {
+      return false;
     }
-    if (!matchupData || !matchupData.matchup_details){
-      return "Loading matchup data...";
-    }
-    
-    const favorite_pick = member.favorite_pick;
-    
-    if (!favorite_pick) {
-      return "No picks submitted";
-    }
-    // use member picks and winning matchups to display correct helmets
+  
+    let allStarted = true;
+    const currentTime = new Date();
+  
+    Object.values(matchupData.matchup_details).forEach((value) => {
+      const matchupStartTime = new Date(value.start_time);
+      if (matchupStartTime > currentTime) {
+        allStarted = false;
+      }
+    });
+  
+    return allStarted;
+  };
+  
+  
+  
+ const extractMemberInfo = (member) => {
+    if (!member.favorite_pick)
+      return null;
     const favorite_matchup = matchupData.matchup_details[member.favorite_pick];
     const underdog_matchup = matchupData.matchup_details[member.underdog_pick];
     const over_matchup = matchupData.matchup_details[member.over_pick];
     const under_matchup = matchupData.matchup_details[member.under_pick];
-
-    const favorite_team = favorite_matchup.spread <= 0 ? favorite_matchup.home_team : favorite_matchup.away_team;
-    const underdog_team = underdog_matchup.spread <= 0 ? underdog_matchup.away_team : underdog_matchup.home_team;
-
-    const favorite_logo_url = getTeamLogoUrl(favorite_team);
-    const underdog_logo_url = getTeamLogoUrl(underdog_team);
-    const over_home_logo_url = getTeamLogoUrl(over_matchup.home_team);
-    const over_away_logo_url = getTeamLogoUrl(over_matchup.away_team);
-    const under_home_logo_url = getTeamLogoUrl(under_matchup.home_team);
-    const under_away_logo_url = getTeamLogoUrl(under_matchup.away_team);
 
     const favoriteStatus = matchupData.favorites.includes(member.favorite_pick) ? 'won' :  (matchupData.underdogs.includes(member.favorite_pick) ? 'lost' : (matchupData.not_scored.includes(member.favorite_pick) ? 'not-scored' : 'pushed'));
     const underdogStatus = matchupData.underdogs.includes(member.underdog_pick) ? 'won' :  (matchupData.favorites.includes(member.underdog_pick) ? 'lost' : (matchupData.not_scored.includes(member.underdog_pick) ? '' : 'pushed'));
@@ -224,6 +267,35 @@ const LeagueList = ({ refresh }) => {
     const underdogStarted = new Date(underdog_matchup.start_time) <= currentTime;
     const overStarted = new Date(over_matchup.start_time) <= currentTime;
     const underStarted = new Date(under_matchup.start_time) <= currentTime;
+
+    return  [favorite_matchup, underdog_matchup, over_matchup, under_matchup, favoriteStatus, underdogStatus, overStatus, underStatus, favoriteStarted, underdogStarted, overStarted, underStarted];
+  }
+
+  const renderMemberInfo = (member) => {
+    if (!selectedWeek) {
+      return "No week chosen";
+    }
+    if (!matchupData || !matchupData.matchup_details){
+      return "Loading matchup data...";
+    }
+    
+    const res = extractMemberInfo(member);
+    
+    if (!res) {
+      return "No picks submitted";
+    }
+    const [favorite_matchup, underdog_matchup, over_matchup, under_matchup, favoriteStatus, underdogStatus, overStatus, underStatus, favoriteStarted, underdogStarted, overStarted, underStarted] = res;
+
+    // use member picks and winning matchups to display correct helmets
+    const favorite_team = favorite_matchup.spread <= 0 ? favorite_matchup.home_team : favorite_matchup.away_team;
+    const underdog_team = underdog_matchup.spread <= 0 ? underdog_matchup.away_team : underdog_matchup.home_team;
+
+    const favorite_logo_url = getTeamLogoUrl(favorite_team);
+    const underdog_logo_url = getTeamLogoUrl(underdog_team);
+    const over_home_logo_url = getTeamLogoUrl(over_matchup.home_team);
+    const over_away_logo_url = getTeamLogoUrl(over_matchup.away_team);
+    const under_home_logo_url = getTeamLogoUrl(under_matchup.home_team);
+    const under_away_logo_url = getTeamLogoUrl(under_matchup.away_team);
 
     return (
       <>
@@ -300,6 +372,16 @@ const LeagueList = ({ refresh }) => {
               }
             }}>
               Leave
+            </button>
+          ) : null}
+          {selectedLeague.name && selectedWeek && selectedLeague.is_creator && allMatchupsStarted() ? (
+            <button className="download-button" onClick={() => {
+              const confirmBox = window.confirm(`Download week summary CSV?`)
+              if (confirmBox === true) {
+                downloadCSV(selectedLeague.name, selectedWeek, members);
+              }
+            }}>
+              Generate CSV
             </button>
           ) : null}
         </div>
