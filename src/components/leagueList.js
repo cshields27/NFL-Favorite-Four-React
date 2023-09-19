@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../authContext';
 import { getTeamLogoUrl } from './matchupRow'; // Import the function to get the team logo URL
+import { useAlert } from 'react-alert'
 import config from '../config';
 import './leagueList.css';
 
@@ -17,6 +18,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
 };
 
 const LeagueList = ({ refresh }) => {
+  const alert = useAlert();
   const { user } = useAuth();
   const [leagues, setLeagues] = useState([]); // list of {name: name, passcode: passcode}
   const [selectedLeague, setSelectedLeague] = useState({name: '', passcode: ''});
@@ -122,7 +124,6 @@ const LeagueList = ({ refresh }) => {
           week: selectedWeek,
         }),
       });
-  
       const data = await response.json();
       setMatchupData(data);
     } catch (error) {
@@ -145,7 +146,29 @@ const LeagueList = ({ refresh }) => {
       });
       const data = await response.json();
       // Refetch league members after kicking a member
+      alert.show('Member kicked!');
       fetchLeagueMembers(selectedLeague.name);
+    } catch (error) {
+      console.error('Error kicking member:', error);
+    }
+  };
+
+  const handleDeleteLeague = async () => {
+    try {
+      const response = await fetch(`${config.API_URL}/api/leagues/delete_league/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Token ${user.token}`,
+        },
+        body: JSON.stringify({
+          league_name: selectedLeague.name,
+        }),
+      });
+      const data = await response.json();
+      alert.show('League deleted!');
+      setSelectedLeague({name: '', passcode: ''});
+      fetchLeagueList();
     } catch (error) {
       console.error('Error kicking member:', error);
     }
@@ -165,11 +188,12 @@ const LeagueList = ({ refresh }) => {
       });
       const data = await response.json();
       // Refetch league list after leaving a league
-      fetchLeagueList();
+      alert.show('League left!');
       setSelectedLeague({ name: '', passcode: '' });
-      setMembers([]);
+      fetchLeagueList();
     } catch (error) {
       console.error('Error leaving league:', error);
+      alert.error(errorData.message);
     }
   };
 
@@ -382,6 +406,16 @@ const LeagueList = ({ refresh }) => {
               }
             }}>
               Generate CSV
+            </button>
+          ) : null}
+          {selectedLeague.name && selectedLeague.is_creator && Array.isArray(members) && members.length == 1 ? (
+            <button className="leave-button" onClick={() => {
+              const confirmBox = window.confirm(`Delete league?`)
+              if (confirmBox === true) {
+                handleDeleteLeague();
+              }
+            }}>
+              Delete
             </button>
           ) : null}
         </div>
