@@ -311,7 +311,7 @@ const handleShare = () => {
       url: 'https://favefour.com',
     });
   } else {
-    navigator.clipboard.writeText(message).then(() => {
+    navigator.clipboard.writeText(message+'\nhttps://favefour.com').then(() => {
       alert.show('Copied results to clipboard');
     });
   }
