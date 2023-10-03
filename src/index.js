@@ -25,16 +25,32 @@ function ScrollToTop() {
 }
 
 const options = {
-    timeout: 3000, // Duration in milliseconds (3 seconds in this case)
+    timeout: 1500, // Duration in milliseconds (3 seconds in this case)
     position: positions.MIDDLE,
     transition: transitions.SCALE,
+}
+
+const SimpleAlertTemplate = ({ message, close }) => {
+  return (
+    <div style={{
+      padding: '10px',
+      backgroundColor: 'rgba(0,0,0,1)',
+      color: 'white',
+      borderRadius: '5px',
+      textAlign: 'center',
+      width: 'fit-content',
+      margin: 'auto'
+    }}>
+      {message}
+    </div>
+  );
 }
 
 const App = () => {
   return (
     <GoogleOAuthProvider clientId='326321185901-sfhn7khp0t1hr8vkc95ph6se20j1k300.apps.googleusercontent.com'>
     <AuthProvider>
-    <AlertProvider template={AlertTemplate} {...options}>
+    <AlertProvider template={SimpleAlertTemplate} {...options}>
     <Router>
       <ScrollToTop />
       <div>

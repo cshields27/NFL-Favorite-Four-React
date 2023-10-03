@@ -98,10 +98,8 @@ const SubmitPicksForm = (props) => {
         console.log('Picks submitted successfully!');
         sessionStorage.setItem(`userPicks-${user.id}`, picks);
         props.onPicksUpdate();
-        alert.show(
-          <div style={{ backgroundColor: '#4CAF50', color: 'white', padding: '10px', borderRadius: '4px' }}>
-            Success!
-          </div>)
+        alert.show('Picks submitted!')
+        window.scrollTo(0, 0);
         setMustSubmit(false);
       } else {
         // Error submitting picks

@@ -99,7 +99,7 @@
   transform: scale(1.05);
 }
 
-.download-button {
+.download-button, .share-button {
   background-color: #00b345;
   color: #fff;
   border: none;
@@ -111,7 +111,7 @@
   margin-top: 4px; /* Keep some space above the button */
 }
 
-.download-button:hover {
+.download-button:hover, .share-button:hover {
   background-color: #007e35;
   transform: scale(1.05);
 }

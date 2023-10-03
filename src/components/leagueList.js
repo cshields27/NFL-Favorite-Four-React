@@ -272,6 +272,50 @@ const LeagueList = ({ refresh }) => {
   };
   
   
+// Helper function to check if all picks are scored for a given league
+const allPicksScored = () => {
+  if (!selectedWeek || !matchupData || !matchupData.matchup_details) {
+    return false;
+  }
+  
+  const curr_user = members.find(member => member.user_id === user.id);
+  if (!curr_user) return false;
+  
+  const res = extractMemberInfo(curr_user);
+  if (!res) return false;
+
+  const [favorite_matchup, underdog_matchup, over_matchup, under_matchup, favoriteStatus, underdogStatus, overStatus, underStatus, favoriteStarted, underdogStarted, overStarted, underStarted] = res;
+
+  const picksStatuses = [favoriteStatus, underdogStatus, overStatus, underStatus];
+
+  let summary = picksStatuses.map(status => {
+    if (status === 'won') return '🟩';
+    if (status === 'pushed') return '⬛'; // Adjust this condition based on your actual status names.
+    if (status === 'lost') return '🟥';    // Adjust this condition based on your actual status names.
+    return '';
+  }).join('');
+  const emojiCount = [...summary].length;
+  if (emojiCount === 4) {
+    return `Favorite Four Week ${selectedWeek}:\n${summary}\n\nhttps://favefour.com`;
+  }
+  return false;
+}
+
+
+const handleShare = () => {
+  const message = allPicksScored();
+  if (navigator.share) {
+    navigator.share({
+      title: 'Favorite Four Picks',
+      text: message,
+      url: 'https://favefour.com',
+    });
+  } else {
+    navigator.clipboard.writeText(message).then(() => {
+      alert.show('Copied results to clipboard');
+    });
+  }
+}
   
  const extractMemberInfo = (member) => {
     if (!member.favorite_pick)
@@ -280,6 +324,8 @@ const LeagueList = ({ refresh }) => {
     const underdog_matchup = matchupData.matchup_details[member.underdog_pick];
     const over_matchup = matchupData.matchup_details[member.over_pick];
     const under_matchup = matchupData.matchup_details[member.under_pick];
+    if (!favorite_matchup)
+      return null;
 
     const favoriteStatus = matchupData.favorites.includes(member.favorite_pick) ? 'won' :  (matchupData.underdogs.includes(member.favorite_pick) ? 'lost' : (matchupData.not_scored.includes(member.favorite_pick) ? 'not-scored' : 'pushed'));
     const underdogStatus = matchupData.underdogs.includes(member.underdog_pick) ? 'won' :  (matchupData.favorites.includes(member.underdog_pick) ? 'lost' : (matchupData.not_scored.includes(member.underdog_pick) ? '' : 'pushed'));
@@ -406,6 +452,11 @@ const LeagueList = ({ refresh }) => {
               }
             }}>
               Generate CSV
+            </button>
+          ) : null}
+          {selectedLeague.name && selectedWeek && allPicksScored() ? (
+            <button className="share-button" onClick={() => handleShare()}>
+              Share Results!
             </button>
           ) : null}
           {selectedLeague.name && selectedLeague.is_creator && Array.isArray(members) && members.length == 1 ? (
