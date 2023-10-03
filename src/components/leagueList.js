@@ -296,7 +296,7 @@ const allPicksScored = () => {
   }).join('');
   const emojiCount = [...summary].length;
   if (emojiCount === 4) {
-    return `Favorite Four Week ${selectedWeek}:\n${summary}\n\nhttps://favefour.com`;
+    return `Favorite Four Week ${selectedWeek}:\n${summary}`;
   }
   return false;
 }
