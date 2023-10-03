@@ -6,6 +6,29 @@ import { useAlert } from 'react-alert'
 import './submitPicksForm.css';
 import config from '../config'
 
+const SharePicksModal = ({ isVisible, onClose, onShare }) => {
+  if (!isVisible) return null;
+
+  const handleBackdropClick = (e) => {
+    onClose();
+  };
+
+  const handleContentClick = (e) => {
+    e.stopPropagation();  // Prevents the click from reaching the backdrop
+  };
+
+  return (
+    <div className={`modal-background ${isVisible ? 'active' : ''}`} onClick={handleBackdropClick}>
+      <div className="modal-content" onClick={handleContentClick}>
+        <button className="close-button" onClick={onClose}>X</button>
+        <p>Picks are in! Share them?</p>
+        <button className="share-button" onClick={onShare}>Share</button>
+      </div>
+    </div>
+  );
+};
+
+
 const SubmitPicksForm = (props) => {
   const alert = useAlert()
   const { isLoggedIn, user } = useAuth();
@@ -13,6 +36,7 @@ const SubmitPicksForm = (props) => {
   const [hasAlertBeenShown, setHasAlertBeenShown] = useState(false);
   const [manualChanges, setManualChanges] = useState(0);
   const [mustSubmit, setMustSubmit] = useState(false);
+  const [isModalVisible, setModalVisible] = useState(false);
 
   const [selectedOptions, setSelectedOptions] = useState({
     favorite: null,
@@ -98,7 +122,8 @@ const SubmitPicksForm = (props) => {
         console.log('Picks submitted successfully!');
         sessionStorage.setItem(`userPicks-${user.id}`, picks);
         props.onPicksUpdate();
-        alert.show('Picks submitted!')
+        //alert.show('Picks submitted!')
+        setModalVisible(true);
         window.scrollTo(0, 0);
         setMustSubmit(false);
       } else {
@@ -111,6 +136,44 @@ const SubmitPicksForm = (props) => {
       console.error('Error submitting picks:', error);
     }
   };
+
+  const getMatchupDetails = (matchupId) => {
+    return props.matchups.find(matchup => matchup.id === matchupId);
+  }
+
+  const ss = (teamName) => {
+    return teamName.split(' ').splice(-1)[0]
+  }
+
+  const handleShare = () => {
+    const weekNumber = props.currentWeek;
+    // Extract and format the selected picks
+    const favoriteMatchup = getMatchupDetails(selectedOptions.favorite);
+    const underdogMatchup = getMatchupDetails(selectedOptions.underdog);
+    const overMatchup = getMatchupDetails(selectedOptions.over);
+    const underMatchup = getMatchupDetails(selectedOptions.under);
+
+    const message = `My Favorite Four for Week ${weekNumber}!\n
+❗ ​Favorite: ${favoriteMatchup.spread <= 0 ? ss(favoriteMatchup.home_team) : ss(favoriteMatchup.away_team)} -${Math.abs(favoriteMatchup.spread)} vs ${favoriteMatchup.spread <= 0 ? ss(favoriteMatchup.away_team) : ss(favoriteMatchup.home_team)}
+🎲 ​Underdog: ${underdogMatchup.spread <= 0 ? ss(underdogMatchup.away_team) : ss(underdogMatchup.home_team)} +${Math.abs(underdogMatchup.spread)} vs ${underdogMatchup.spread <= 0 ? ss(underdogMatchup.home_team) : ss(underdogMatchup.away_team)}
+🎉 Over: ${ss(overMatchup.away_team)} vs ${ss(overMatchup.home_team)} o ${overMatchup.over_under}
+🥱 ​Under: ${ss(underMatchup.away_team)} vs ${ss(underMatchup.home_team)} u ${underMatchup.over_under}`;
+
+    if (navigator.share) {
+      navigator.share({
+        title: 'Favorite Four Picks',
+        text: message,
+        url: 'https://favefour.com',
+      });
+    } else {
+      navigator.clipboard.writeText(message+'\n\nhttps://favefour.com').then(() => {
+        alert.show('Copied results to clipboard');
+      });
+    }
+  
+    // After sharing, close the modal
+    setModalVisible(false);
+  };  
 
   const hasStartedMatchup = (matchupId) => {
     const matchup = props.matchups.find((m) => m.id === matchupId);
@@ -186,6 +249,11 @@ const SubmitPicksForm = (props) => {
             Login with Google to Submit Picks
         </button>)
       }
+      <SharePicksModal 
+        isVisible={isModalVisible} 
+        onClose={() => setModalVisible(false)} 
+        onShare={handleShare} 
+      />
       <div className="column-labels">
         <div className="label">Favorite</div>
         <div className="label">Spread</div>
