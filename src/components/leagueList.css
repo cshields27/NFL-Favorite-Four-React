@@ -1,7 +1,7 @@
 /* leagueList.css */
 
 .league-list-container {
-  margin: 20px;
+  margin: 10px;
 }
 
 @media screen and (min-width: 768px) {
@@ -125,7 +125,8 @@ table {
 }
 
 th, td {
-  padding: 3.2px;
+  padding-top: 5px;
+  padding-bottom: 5px;
   text-align: center;
 }
 
@@ -262,6 +263,12 @@ option[disabled] {
   height: auto;
 }
 
+.table-section td:first-child {
+  font-size: 1em; /* Adjust as needed */
+  max-width: 150px; /* Adjust based on your design needs */
+  overflow: hidden;
+}
+
 /* Explicitly set the width of W and L columns */
 th.wl-column, td.wl-column {
   width: 40px;
@@ -269,7 +276,7 @@ th.wl-column, td.wl-column {
 
 /* Set minimum width for pick summary columns */
 th.pick-summary, td.pick-summary {
-  min-width: 100px;
+  min-width: 160px;
 }
 
 .won {
@@ -305,7 +312,7 @@ th.pick-summary, td.pick-summary {
 
   /* Adjust size of favorite and underdog picks */
   .pick-favorite, .pick-underdog, .pick-lock {
-    width: 30px;
+    width: 35px;
   }
 
   /* Adjust size of over and under picks */
@@ -316,5 +323,15 @@ th.pick-summary, td.pick-summary {
   /* Stack over and under logos on top of each other */
   .pick-over, .pick-under {
     flex-direction: column;
+  }
+  
+  /* Explicitly set the width of W and L columns */
+  th.wl-column, td.wl-column {
+    width: 40px;
+  }
+
+  .table-section td:first-child {
+    font-size: .9em;
+    overflow: hidden;
   }
 }

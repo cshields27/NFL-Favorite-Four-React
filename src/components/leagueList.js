@@ -352,7 +352,7 @@ const handleShare = () => {
     const res = extractMemberInfo(member);
     
     if (!res) {
-      return "No picks submitted";
+      return "-";
     }
     const [favorite_matchup, underdog_matchup, over_matchup, under_matchup, favoriteStatus, underdogStatus, overStatus, underStatus, favoriteStarted, underdogStarted, overStarted, underStarted] = res;
 
@@ -480,6 +480,7 @@ const handleShare = () => {
                 <th>User</th>
                 <th className="wl-column">W</th>
                 <th className="wl-column">L</th>
+                <th className="wl-column">%</th>
                 <th>Picks</th>
                 {selectedLeague.is_creator && <th className="actions-column">Actions</th>}
               </tr>
@@ -490,6 +491,7 @@ const handleShare = () => {
                   <td>{member.user_email.split('@')[0]}</td>
                   <td className="wl-column">{member.wins}</td>
                   <td className="wl-column">{member.losses}</td>
+                  <td className="wl-column">{(member.wins + member.losses) == 0 ? (0).toFixed(2) : (member.wins / (member.wins + member.losses)).toFixed(2)}</td>
                   <td>{renderMemberInfo(member)}</td>
                   {selectedLeague.is_creator && (
                   <td className="actions-column">
