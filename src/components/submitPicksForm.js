@@ -122,10 +122,10 @@ const SubmitPicksForm = (props) => {
         console.log('Picks submitted successfully!');
         sessionStorage.setItem(`userPicks-${user.id}`, picks);
         props.onPicksUpdate();
-        //alert.show('Picks submitted!')
         setModalVisible(true);
         window.scrollTo(0, 0);
         setMustSubmit(false);
+        sessionStorage.removeItem(`userPicks_${user.id}`)
       } else {
         // Error submitting picks
         const errorData = await response.json();

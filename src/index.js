@@ -13,6 +13,7 @@ import About from './views/about';
 import SubmitPicks from './views/submitpicks'
 import Leagues from './views/leagues'
 import Terms from './views/terms'
+import User from './views/user'
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -58,6 +59,7 @@ const App = () => {
         <Route component={Leagues} exact path="/leagues"/>
         <Route component={About} exact path="/about" />
         <Route component={SubmitPicks} exact path="/submit-picks"/>
+        <Route component={User} exact path="/profile"/>
         <Route component={Terms} exact path="/terms-of-service"/>
       </div>
     </Router>

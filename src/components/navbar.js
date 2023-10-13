@@ -28,9 +28,9 @@ const Navbar = () => {
         </Link>
       </div>
       <div className="navbar-buttons">
-      <Link to="/submit-picks" className="navbar-button"> Submit Picks </Link>
+        <Link to="/submit-picks" className="navbar-button"> Submit Picks </Link>
         <Link to="/leagues" className="navbar-button"> Leagues </Link>
-        <Link to="/about" className="navbar-button"> About </Link>
+        <Link to="/profile" className="navbar-button"> Profile </Link>
         <div className="navbar-icon">
           <a
             href="https://twitter.com/FavoriteFour"

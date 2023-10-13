@@ -491,7 +491,7 @@ const handleShare = () => {
                   <td>{member.user_email.split('@')[0]}</td>
                   <td className="wl-column">{member.wins}</td>
                   <td className="wl-column">{member.losses}</td>
-                  <td className="wl-column">{(member.wins + member.losses) == 0 ? (0).toFixed(2) : (member.wins / (member.wins + member.losses)).toFixed(2)}</td>
+                  <td className="wl-column">{(member.wins + member.losses) == 0 ? (0).toFixed(3).slice(1) : (member.wins / (member.wins + member.losses)).toFixed(3).slice(1)}</td>
                   <td>{renderMemberInfo(member)}</td>
                   {selectedLeague.is_creator && (
                   <td className="actions-column">
