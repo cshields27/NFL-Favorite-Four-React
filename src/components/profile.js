@@ -93,12 +93,15 @@ const Profile = () => {
           <div key={key} className="record-card">
             <h2>{key.charAt(0).toUpperCase() + key.slice(1)}</h2>
             <p>{value.wins}-{value.losses}</p>
-            <p>{(value.wins + value.losses > 0) ? (value.wins / (value.wins + value.losses)).toFixed(3).slice(1) : (0).toFixed(3).slice(1)}</p>
+            <p>{(value.wins + value.losses > 0) ? 
+            value.wins == value.wins + value.losses ? (1).toFixed(3) : (value.wins / (value.wins + value.losses)).toFixed(3).slice(1) 
+            : 
+            (0).toFixed(3).slice(1)}</p>
           </div>
         ))}
       </div>
       <div className="profile-weekly-picks-section">
-        {weeklyPicks.length ? weeklyPicks.map((week, index) => (
+        {weeklyPicks.length ? weeklyPicks.slice().reverse().map((week, index) => (
           <div key={index} className="profile-weekly-pick">
             <h3>Week {week.weekNumber}</h3>
             <div className="profile-picks-container">
