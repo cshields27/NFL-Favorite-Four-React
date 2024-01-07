@@ -28,12 +28,19 @@ const SubmitPicks = () => {
         console.log('fetching matchups from API');
         setIsLoading(true);
         const matchupsResponse = await fetch(`${config.API_URL}/api/upcoming_week_matchups/`);
-        const matchupsData = await matchupsResponse.json();
-        setMatchups(matchupsData.matchups);
-        setCurrentWeek(matchupsData.week_number);
-        setIsLoading(false);
-        sessionStorage.setItem('matchups', JSON.stringify(matchupsData.matchups));
-        sessionStorage.setItem('currentWeek', matchupsData.week_number);
+        if (matchupsResponse.ok) {
+          const matchupsData = await matchupsResponse.json();
+          setMatchups(matchupsData.matchups);
+          setCurrentWeek(matchupsData.week_number);
+          setIsLoading(false);
+          sessionStorage.setItem('matchups', JSON.stringify(matchupsData.matchups));
+          sessionStorage.setItem('currentWeek', matchupsData.week_number);
+        }
+        else{
+          console.log('No matchups found!')
+          setCurrentWeek(-1);
+          setIsLoading(false);
+        }
       }
 
       if (user && isLoggedIn) {
@@ -82,6 +89,11 @@ const SubmitPicks = () => {
     <div className='home-container'>
       <Navbar></Navbar>
       <div className="submit-picks-container">
+        {currentWeek === -1 ? (
+          <div className="submit-picks-content">
+            <h1 className="submit-picks-heading">Come back next year!</h1>
+          </div>
+        ) : (
         <div className="submit-picks-content">
           {userPicks && (
             <PickSummary userPicks={userPicks} matchups={matchups} currentWeek={currentWeek}/>
@@ -99,7 +111,7 @@ const SubmitPicks = () => {
               onPicksUpdate={handlePicksUpdate}
             />
           )}       
-        </div>
+        </div>)}
       </div>
       <Footer></Footer>
     </div>
